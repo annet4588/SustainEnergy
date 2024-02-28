@@ -1,0 +1,128 @@
+
+        /* Add your CSS styles here */
+       
+        h1, h2{
+            font-family: "Arial Black", sans-serif; /* Use a bold font for headings */
+            margin-bottom: 10px; /* Add spacing below headings */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;  
+            padding:2px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        
+        ul.menu-main {
+            list-style-type: none;
+            display: flex;
+        }
+        
+        ul.menu-main li {
+            margin-right: 15px;
+        }
+        
+        ul.menu-member {
+            list-style-type: none;
+            display: flex;
+        }
+        
+        ul.menu-member li {
+            margin-right: 10px;
+        }
+        
+        .wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        
+        .index-login-a {
+            float: left;
+            width: 30%;
+            margin-right: 2%;
+        }
+        
+        .index-login-login {
+            margin-right: 0;
+        }
+        
+        /* Button Styles */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        /* Link Styles */
+        a {
+            color: #333435;
+            text-decoration: none;
+        }
+        
+        /* Hover effect for links */
+        a:hover {
+            color: #edf1f5;
+        }
+
+        /* Add custom CSS for centering */
+        .navbar {
+            justify-content: space-between;
+            background-color: #c3cbac;
+        }
+        .navbar-brand {
+            margin-right: 20px; /* Adjust margin as needed */
+            margin-left: 0px;;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 30px; /* Add spacing between nav items */
+        }
+        #cart-item-count{
+            color:orange;
+        }
+        .input-group {
+            max-width: 400px; /* Set the maximum width of the search bar */
+            margin: 10 auto; /* Center the search bar */
+        }
+        
+        .img_main {
+            max-width: 100%; /* Ensure the image fits within its container */
+            max-height: 100%; /* Ensure the image fits within its container */
+            height: auto; /* Maintain aspect ratio */
+        }
+        
+        .card {
+            border: bold;           
+            border-radius: 10px;
+            overflow: hidden; /* Ensure the image doesn't overflow outside the card */
+            height: auto;
+            width:auto;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the card */
+            transition: box-shadow 0.3s ease; /* Add smooth transition to the shadow */
+        }
+         /* Apply shadow when hovering over the card */
+        .card:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adjust shadow values for hover effect */
+        }
