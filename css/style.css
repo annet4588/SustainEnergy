@@ -8,22 +8,31 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4; */
             color: #333;
         }
         
         .navbar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             color: #fff;  
             padding:2px;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
         }
 
+        .navbar-brand {
+            margin-right: 20px; /* Adjust margin as needed */
+            margin-left: 10px;;
+        }
+        .navbar-nav {
+            margin-left: auto;
+        }
+        .nav-item {
+            margin-right: 20px; /* Add spacing between nav items */
+        }
         
-        ul.menu-main {
+        ul.menu-main,  ul.menu-member {
             list-style-type: none;
             display: flex;
         }
@@ -32,32 +41,12 @@
             margin-right: 15px;
         }
         
-        ul.menu-member {
-            list-style-type: none;
-            display: flex;
-        }
-        
         ul.menu-member li {
             margin-right: 10px;
         }
         
-        .wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-        
-        
-        .index-login-a {
-            float: left;
-            width: 30%;
-            margin-right: 2%;
-        }
-        
-        .index-login-login {
-            margin-right: 0;
-        }
-        
+     
+         
         /* Button Styles */
         button {
             background-color: #4CAF50;
@@ -84,45 +73,165 @@
             color: #edf1f5;
         }
 
-        /* Add custom CSS for centering */
-        .navbar {
-            justify-content: space-between;
-            background-color: #c3cbac;
-        }
-        .navbar-brand {
-            margin-right: 20px; /* Adjust margin as needed */
-            margin-left: 0px;;
-        }
-        .navbar-nav {
-            margin-left: auto;
-        }
-        .nav-item {
-            margin-right: 30px; /* Add spacing between nav items */
-        }
+ 
         #cart-item-count{
             color:orange;
         }
         .input-group {
             max-width: 400px; /* Set the maximum width of the search bar */
+
             margin: 10 auto; /* Center the search bar */
         }
+        .form-group{
+            padding: 3px;
+        }
         
-        .img_main {
+        .img-main {
             max-width: 100%; /* Ensure the image fits within its container */
             max-height: 100%; /* Ensure the image fits within its container */
             height: auto; /* Maintain aspect ratio */
         }
         
         .card {
-            border: bold;           
-            border-radius: 10px;
+            border: none;      /*bold */  
+            border-radius: 0;  /*10px*/
             overflow: hidden; /* Ensure the image doesn't overflow outside the card */
             height: auto;
-            width:auto;
+            width: 100%;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the card */
             transition: box-shadow 0.3s ease; /* Add smooth transition to the shadow */
         }
+        .card.card-login {
+            border: bold;      /*bold */  
+            border-radius: 10px;  /*10px*/
+            overflow: hidden; /* Ensure the image doesn't overflow outside the card */
+            height: auto;
+            width: 400px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the card */
+            transition: box-shadow 0.3s ease; /* Add smooth transition to the shadow */
+        }
+    
+
          /* Apply shadow when hovering over the card */
         .card:hover {
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adjust shadow values for hover effect */
         }
+     
+       
+        .card-title{
+            font-family: "Arial Black", sans-serif;
+            height: calc(1.2em * 2);
+        }
+
+   
+        /* Activity card */
+   
+        .rounded-circle {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            line-height: 100px;
+            text-align: center;
+            border-radius: 50%;
+            background-color:rgb(128, 128, 128); /* Change the color as needed */
+            color: #fff;
+            margin: 10px;
+        }
+
+        /* .image-wrapper {
+            width: 100%;
+            height: 200px; /* Adjust as needed */
+            /* overflow: hidden;
+        } */
+        
+        /* .image-wrapper img {
+            width: 100%;
+            height: auto;
+        } */ 
+        
+        /* .five-lines-paragraph {
+            height: calc(1.2em * 8); /* Adjust based on your font size and line height */
+            /* text-overflow: hidden; /* Hide overflowing text */
+            /* text-overflow: ellipsis; /* Adds ellipsis (...) when text overflows */
+        /* } */
+
+      
+        h3.mission{
+            padding-top:10px;
+            font-family: Arial black, sans-serif;
+            font-size: large;
+            justify-content: center;
+        }
+
+      
+        .img-logo{
+            size: 30px;
+        }
+
+        /* Green Calculator table style*/
+        .table-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .custom-table th,
+        .custom-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .custom-table th {
+            text-align: left;
+            background-color: #f2f2f2;
+
+        }
+        
+        .custom-table input[type="text"],
+        .custom-table button {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .custom-table input[type="hidden"] {
+            display: none;
+        }
+ 
+        .custom-table th div {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* About page */
+
+        .activity-body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .image-container {
+            display: flex;
+            justify-content: center; /* Center the image horizontally */
+        }
+        
+        .flex-img {
+            max-width: 100%; /* Ensure the image doesn't exceed its container */
+            height: auto; /* Maintain aspect ratio */
+        }
+        
+        /* Login */
+      
+ 
+        
+        /* background-color: #b7e732; 
+        background-color: #eda011;*/
+
+        /* .main.login-container {
+            background-image: url('images/nature1.jpg');
+            background-size: cover;
+            background-position: center;
+        } */

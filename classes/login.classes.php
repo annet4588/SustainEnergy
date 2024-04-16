@@ -4,64 +4,108 @@ class Login extends Dbh {
 
     //Method to validate the user credentials
     protected function getUser($uid, $pwd){
-        $stmt = $this->getConnection()->prepare('SELECT users_pwd FROM users WHERE users_uid =? OR users_email=?');
-   
-
-        //Check if the execution of the sql statement failed
-        if(!$stmt->execute(array($uid, $pwd))){
-           $stmt = null;
-           header("location: ..index.php?error=stmtfailed");
-           exit();
-        }
-
-        //User not found
-        if($stmt->rowCount() == 0){
-            $stmt = null;
-            header("location: ../index.php?error=usernotfound");
-        }
-
-        //Password verification
-        $pwdHashed = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $checkPwd = password_verify($pwd, $pwdHashed[0]["users_pwd"]);
-
-        //Handling incorrect password
-        if($checkPwd == false){
-            $stmt = null;
-            header("location: ../index.php?error=wrongpassword");
-            exit();
-        //Password is correct
-        }elseif($checkPwd == true){
-            $stmt = $this->getConnection()->prepare('SELECT * FROM users WHERE users_uid=? OR users_email=? AND users_pwd=?');
-        
-            if(!$stmt->execute(array($uid, $uid, $pwd))){
-                $stmt = null;
-                header("location: ../index.php?error=stmtfailed");
-                exit();
-            }
+        try {
+            // Prepare the SQL statement
+            $stmt = $this->getConnection()->prepare('SELECT * FROM users WHERE users_uid = :uid OR users_email= :email');
+            
+            // Execute the statement with provided parameters
+            $stmt->execute(array(':uid' => $uid, ':email' => $uid));
+    
+            // Check if any user found
             if($stmt->rowCount() == 0){
-                $stmt = null;
-                header("location: ../index.php?error=usernotfound");
-                exit();
+                throw new Exception("User not found.");
             }
-
-            $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
+            // Fetch user details
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Verify password
+            $checkPwd = password_verify($pwd, $user["users_pwd"]);
+    
+            // Handling incorrect password
+            if(!$checkPwd){
+                throw new Exception("Incorrect password.");
+            }
+    
+            // Start session and set session variables
             session_start();
-
-            //Create 2 SESSION variables, one for the ID of the user 
-            //and another one for the username of the user(useruid) inside the SESSION.
-            $_SESSION['userid'] = $user[0]['users_id'];
-            $_SESSION['useruid'] = $user[0]['users_uid'];
-        
+            $_SESSION['userid'] = $user['users_id'];
+            $_SESSION['useruid'] = $user['users_uid'];
+        } catch (PDOException $e) {
+            // Handle database errors
+            throw new Exception("Database error: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Handle other exceptions
+            throw $e;
+        } finally {
+            // Close the statement
             $stmt = null;
         }
-
-        //The prepared statement is null, closing the db connection.
-        $stmt = null;
     }
+
+
+     // Find user by email or username
+    public function findUserByEmailOrPassword($email, $username){
+        try {
+            $stmt = $this->getConnection()->prepare('SELECT * FROM users WHERE users_uid = :username OR users_email = :email');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+
+            // Execute the statement
+            $stmt->execute();
+
+            $findUser = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Check row
+            if($findUser) {
+                return $findUser;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Handle database errors
+            throw new Exception("Database error: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Handle other exceptions
+            throw $e;
+        } finally {
+            // Close the statement
+            $stmt = null;
+        }
+    }
+
+    // Reset Password
+    public function resetPassword($newPwdHash, $tokenEmail){
+        try {
+            $stmt = $this->getConnection()->prepare('UPDATE users SET users_pwd=:pwd WHERE users_email=:email');
+            $stmt->bindParam(':pwd', $newPwdHash);
+            $stmt->bindParam(':email', $tokenEmail);
+
+            // Execute the statement
+            if($stmt->execute()){
+                return true;
+            } else {
+                throw new Exception("Error updating password.");
+            }
+        } catch (PDOException $e) {
+            // Handle database errors
+            throw new Exception("Database error: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Handle other exceptions
+            throw $e;
+        } finally {
+            // Close the statement
+            $stmt = null;
+        }
+    }
+
 }
 
 //This class encapsulates the logic for authenticating a user 
 //based on provided credentials and handling sessions upon successful authentication. 
 //Additionally, it includes error handling for various scenarios, 
 //such as SQL statement execution failures and incorrect passwords.
+//    if(!$checkPwd){
+ //   $stmt = null;
+ //   header("location: ../index.php?error=wrongpassword");
+//    exit();
+//}

@@ -4,6 +4,7 @@ class LoginContr extends Login {
    
     private $uid;
     private $pwd;
+    private $errors = array();
 
 
     //Constructor
@@ -14,27 +15,38 @@ class LoginContr extends Login {
 
     //Method to process login input externally
     public function processLogin(){
-        $this->loginUser();
+        try{
+            $this->loginUser();
+        }catch(Exception $e){
+            // Handle the exception
+            $this->errors[]=$e->getMessage();
+        }
+        
     }
 
     //Method to initiate the login process
     private function loginUser(){
-      if($this->emptyInput() == false){
-        header("location: ../index.php?error=emptyinput");
-        exit();
-      }
-      $this->getUser($this->uid, $this->pwd);
+        try{
+            //Check for empty input
+            if($this->emptyInput()){
+                throw new Exception("Empty username or password.");
+            }
+            // Attempt to get user
+            $this->getUser($this->uid, $this->pwd);
+        }catch(Exception $e){
+            // Re-throw the exception to be caught by the calling method
+        throw new Exception("Login failed: " . $e->getMessage());
+        }
     }
 
-    //Method checks if either the username or password is empty
+    // Method checks if either the username or password is empty
     private function emptyInput(){
-        $result = true;
-        if(empty($this->uid) || empty($this->pwd)){
-            $result = false;
-        }else{
-            $result=true;
-        }
-        return $result;
+        return empty($this->uid) || empty($this->pwd);
+    }
+
+     // Method to get the array of errors
+     public function getErrors(){
+        return $this->errors;
     }
 }
 

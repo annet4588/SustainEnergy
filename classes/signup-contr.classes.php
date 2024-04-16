@@ -1,123 +1,85 @@
 <?php
-
-class SignupContr extends Signup{
+class SignupContr extends Signup {
     private $uid;
     private $pwd;
     private $pwdRepeat;
     private $email;
+    private $errors = array();
 
-
-    public function __construct($uid, $pwd, $pwdRepeat, $email){
-
+    public function __construct($uid, $pwd, $pwdRepeat, $email) {
         $this->uid = $uid;
         $this->pwd = $pwd;
         $this->pwdRepeat = $pwdRepeat;
         $this->email = $email;
     }
+
     // Public method to call private signupUser method
     public function processSignup() {
-        $this->signupUser();
+        try {
+            $this->signupUser();
+        } catch (Exception $e) {
+            $this->errors[] = $e->getMessage();
+        }
     }
-    //Signup user
-    private function signupUser(){
 
-        var_dump($this->uid, $this->pwd, $this->pwdRepeat, $this->email); 
-    
-      if($this->emptyInput()== false){
-        //echo "Empty input!";
-        header("location: ../index.php?error=emptyinput");
-        exit();
-      }
+    // Method to get the array of errors
+    public function getErrors() {
+        return $this->errors;
+    }
+
+    // Signup user
+    private function signupUser() {
+        if (!$this->emptyInput()) {
+            throw new Exception("Empty Input");
+        }
   
-      if($this->invalidUid()== false){
-        //echo "Invalid username!";
-        header("location: ../index.php?error=username");
-        exit();
-      }
-      if($this->invalidEmail()== false){
-        //echo "Invalid email!";
-        header("location: ../index.php?error=email");
-        exit();
-      }
-      if($this->pwdMatch()== false){
-        //echo "Passwords don't match!";
-        header("location: ../index.php?error=passwordmatch");
-        exit();
-      }
-      if($this->uidTakenCheck()== false){
-        //echo "Username or email taken!";
-        header("location: ../index.php?error=useroremailtaken");
-        exit();
-      }
+        if (!$this->invalidUid()) {
+            throw new Exception("Invalid Username");
+        }
+        
+        if (!$this->invalidEmail()) {
+            throw new Exception("Invalid Email");
+        }
+        
+        if (!$this->pwdMatch()) {
+            throw new Exception("Passwords do not match");
+        }
+        
+        if (!$this->uidTakenCheck()) {
+            throw new Exception("Username or Email is already taken");
+        }
 
-      $this->setUser($this->uid, $this->pwd, $this->email);
+        $this->setUser($this->uid, $this->pwd, $this->email);
     }
 
-    //Method to check if any empty input
-    private function emptyInput(){
-        $result = true;
-        if(empty($this->uid) || empty($this->pwd) || empty($this->pwdRepeat) || empty($this->email)){
-
-          $result = false;
-        } else{
-            $result = true;
-        }
-        return $result;
+    // Method to check if any empty input
+    private function emptyInput() {
+        return !(empty($this->uid) || empty($this->pwd) || empty($this->pwdRepeat) || empty($this->email));
     }
 
-    //Check certain characters dont exist inside the user ID input 
-    private function invalidUid(){
-        $result =null;
-        if(!preg_match("/^[a-zA-Z0-9]*$/", $this->uid)){
-            $result = false;
-        }else{
-            $result = true;
-        }
-        return $result;
+    // Check certain characters don't exist inside the user ID input 
+    private function invalidUid() {
+        return preg_match("/^[a-zA-Z0-9]*$/", $this->uid);
     }
 
-    //Check email address is properly validated
-    private function invalidEmail(){
-        $result =null;
-        if(!filter_var( $this->email, FILTER_VALIDATE_EMAIL)){
-            $result = false;
-        }else{
-            $result = true;
-        }
-        return $result;
+    // Check email address is properly validated
+    private function invalidEmail() {
+        return filter_var($this->email, FILTER_VALIDATE_EMAIL);
     }  
     
-    //Check for password and repeat password match
-    private function pwdMatch(){
-        $result =null;
-        if($this->pwd !== $this->pwdRepeat){
-            $result = false;
-        }else{
-            $result = true;
-        }
-        return $result;
+    // Check for password and repeat password match
+    private function pwdMatch() {
+        return $this->pwd === $this->pwdRepeat;
     }
 
-    //Check if the user exists
-    private function uidTakenCheck(){
-        $result =null;
-        if(!$this->checkUser($this->uid, $this->email)){
-            $result = false;
-        }else{
-            $result = true;
-        }
-        return $result;
+    // Check if the user exists
+    private function uidTakenCheck() {
+        return $this->checkUser($this->uid, $this->email);
     }
 
-    //Create method to get the user ID
-    public function fetchUserId($uid){
+    // Create method to get the user ID
+    public function fetchUserId($uid) {
         $userId = $this->getUserId($uid);
-        return $userId[0]["users_id"]; //return the first row of data we get form the dtabase and the column name
+        return $userId[0]["users_id"]; //return the first row of data we get from the database and the column name
     }
-
 }
-
-
-
-
-    

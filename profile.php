@@ -1,86 +1,156 @@
 <?php
 include_once "header.php";
 
+// Check if $_SESSION is set and not empty
+if (!isset($_SESSION['userid']) || !isset($_SESSION['useruid'])) {
+    // Handle the case where $_SESSION is not set or empty
+    header("location: ../login.php?error=session");
+    exit();
+}
 //Access to the classes in order to grab info
 include_once "classes/dbh.classes.php";
 include_once "classes/profileinfo.classes.php";
 include_once "classes/profileinfo-contr.classes.php";
 include_once "classes/profileinfo-view.classes.php";
 $profileInfo = new ProfileInfoView();
+
+// Instantiate ProfileInfoContr class to retrieve profile data
+$profileInfoContr = new ProfileInfoContr($_SESSION['userid'], $_SESSION['useruid']);
+
+// Fetch profile information
+$profileData = $profileInfoContr->getProfileInfo($_SESSION['userid']);
+
+var_dump($profileData);
+
+// Retrieve individual profile data
+$profileStatus = $profileData['profile_status'] ?? '';
+$companyName = $profileData['company_name'] ?? '';
+$firstName = $profileData['first_name'] ?? '';
+$lastName = $profileData['last_name'] ?? '';
+$email = $profileData['email'] ?? '';
+$phoneNumber = $profileData['phone_number'] ?? '';
+$joinDate = $profileData['join_date'] ?? '';
+
+// Check if the user is subscribed
+$isSubscribed = $profileStatus === 'Active';
+
+// Retrieve current date
+$currentDate = date('Y-m-d');
 ?>
-
-<section class="center-card">
-    <div class="card profile-bg profile-card">
-        <div class="card-body profile-info">
-            <div class="profile-info-img">
-                <p>
-                    <?php
-                       echo $_SESSION["useruid"];
-                    ?>	
-                </p>
-                <div class="break"></div>
-                <a href="profile_settings.php" class="follow-btn">PROFILE SETTINGS</a>
+<body class="d-flex flex-column vh-100">
+  <main class="flex-grow-1">
+  <div class="p-3 text-center">
+        <h3>Profile</h3>
+    </div>
+    <section class="center-card">
+        <div class="row d-flex p-3">
+            <!-- First Card (Left) -->
+            <div class="col-md-12 col-lg-6 d-flex p-3">
+                <div class="card profile-bg profile-card" id="profile-card">
+                <div class="card-body profile-info" id="profile-body">  
+                    <img class="rounded-circle" src="activityImg/img_default.png">
+                    <h4><?php echo $_SESSION["useruid"] ?></h4>
+                    <form method="POST" action="shopping_cart.php">
+                    <div class="form-group">
+                    <label for="profile_status">Company status</label>
+                        <input type="text" class="form-control" name="profile_status" readonly value="<?php echo $profileStatus;?>" />
+                        <!-- Disable the button if user is subscribed -->
+                        <button type="submit" class="btn btn-outline-success mt-3" name="subscribe" <?php if($isSubscribed) echo 'disabled'; ?>>
+                                    <?php echo $isSubscribed ? 'Subscribed' : 'Subscribe'; ?>
+                                </button>
+                        </div>
+                    </form>
+                        <form method="POST" action="includes/profileinfo.inc.php">
+                            <!-- Include a hidden input field for the profile ID -->
+                            <input type="hidden" name="profiles_id" value="<?php echo $profileId; ?>">
+                           <div class="form-group">
+                                <label for="company_name">Company Name</label>
+                                <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" value="<?php echo $companyName;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name">First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="<?php echo $firstName;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="<?php echo $lastName;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Update Email" value="<?php echo $email;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Phone Number" value="<?php echo $phoneNumber;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="join_date">Date Registered</label>
+                                <input type="text" class="form-control" id="join_date" name="join_date" value="<?php echo $currentDate; ?>">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-outline-success mt-3" name="update_profile">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="card-body profile-info-img">
-                <h3>ABOUT</h3>
-                <p>
-                    <?php
-                    //Grab the method we created in profileinfo-view class and pass the SESSION var
-                    $profileInfo->fetchAbout($_SESSION["userid"]);
-                    ?>				
-                </p>
-                <h3>FOLLOWERS</h3>
-                <h3>FOLLOWING</h3>
+
+            <!-- Two Cards Aligned Above Each Other (Right) -->
+            <div class="col-md-12 col-lg-6">
+                <!-- First Card -->
+                <div class="col-md-10 d-flex p-3">
+                    <div class="card profile-bg profile-card" id="profile-card">
+                        <div class="card-body profile-content" id="profile-body">
+                            <!-- Content of the second card goes here -->
+                            <h4>Achievements</h4>
+                            <h5>Certificates</h5>
+                            <a href="certificate.php" type="submit" class="btn btn-outline-success">View</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Card -->
+                <div class="col-md-10 d-flex p-3">
+                    <div class="card profile-bg profile-card" id="profile-card">
+                        <div class="card-body profile-content" id="profile-body">
+                            <!-- Content of the third card goes here -->
+                            <h4>Payment</h4>
+                            <h5>Cards</h5>                            
+                            <a href="credit_card.php" type="submit" class="btn btn-outline-success">Add Card</a>  
+                            <a href="credit_card_added.php" type="submit" class="btn btn-outline-success">View My Cards</a>                
+                        </div>
+                    </div>
+                </div>
+                 <!-- Third Card -->
+                 <div class="col-md-10 d-flex p-3">
+                    <div class="card profile-bg profile-card" id="profile-card">
+                        <div class="card-body profile-content" id="profile-body">
+                            <!-- Content of the third card goes here -->
+                            <h4>History</h4>
+                            <h5>Purchase</h5>
+                            <a href="purchase_history.php" type="submit" class="btn btn-outline-success">Go</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+</main>
+ </body>
+ </html>
 
-    <div class="card profile-bg profile-card">
-        <div class="card-body profile-content">
-            <div class="card-body profile-intro">
-                <h3>
-                    <?php
-                    //Grab the method we created in profileinfo-view class and pass the SESSION var
-                    $profileInfo->fetchTitle($_SESSION["userid"]);
-                    ?>	
-                </h3>
-                <p>
-                    <?php
-                        //Grab the method we created in profileinfo-view class and pass the SESSION var
-                        $profileInfo->fetchText($_SESSION["userid"]);
-                    ?>	
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="card profile-bg profile-card">
-        <div class="card-body profile-posts">
-            <h3>POST</h3>
-            <div class="profile-post">
-                <h2>IT IS NICE WEATHER OUTSIDE</h2>
-                <p>Text you like</p>
-                <p>12:45 - 24/11/2023</p>
-            </div>
-            <div class="profile-post">
-                <h2>RECYCLING IS A GOOD IDEA</h2>
-                <p>Text you like</p>
-                <p>16:15 - 25/11/2023</p>
-            </div>
-        </div>
-    </div>
-</section>
-
+ <?php
+include_once "footer.php";?>
     <style>
-  .center-card {
+  #profile-card .center-card {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Adjust as needed */
+        /* height: 100vh; Adjust as needed */
     }
 
-    .card {
-        width: 300px; /* Adjust as needed */
+    #profile-card .card {
+        width: 400px; /* Adjust as needed */
         border: 1px solid #ccc;
         border-radius: 8px;
         overflow: hidden;
@@ -89,11 +159,11 @@ $profileInfo = new ProfileInfoView();
         margin: 0 10px;
     }
 
-    .card:hover {
+    #profile-card .card:hover {
         transform: translateY(-5px);
     }
 
-    .card-body {
+    #profile-cody.card-body {
         padding: 20px;
     }
 
@@ -114,5 +184,4 @@ $profileInfo = new ProfileInfoView();
         width: 100%; /* Adjust as needed */
     }
     </style>
-</body>
-</html>
+

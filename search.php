@@ -25,7 +25,7 @@ if(isset($_GET['query'])){
                    <div class="card-body activity-info">
                      <img src="activityImg/' . $row['activity_img'] . '" class="img-fluid fixed-height-image" alt="' . $row['activity_name'] . '">
                      <h5 class="card-title mt-3" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' . $row['activity_name'] . '</h5>
-                     <a href="activity.php?activity_id='. $row['activity_id'] . '" class="btn btn-primary">More Details</a>
+                     <a href="activityinfo.php?activity_id='. $row['activity_id'] . '" class="btn btn-outline-success">More Details</a>
                    </div>
                  </div>
                </div> ';

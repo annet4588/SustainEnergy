@@ -17,30 +17,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     //Dump the values for debugging
     var_dump($uid, $pwd, $pwdRepeat, $email);
+    var_dump($userId);
 
     //Instantiate classes
-    include "../classes/dbh.classes.php";
+    require_once "../classes/dbh.classes.php";
     include "../classes/signup.classes.php";
     include "../classes/signup-contr.classes.php";
 
-    //Create signup Object
-    $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
+    try {
+        // Create signup Object and process signup
+        $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
+        $signup->processSignup();
+        $errors = $signup->getErrors();
 
-    //Running error handling
-    $signup->processSignup();
+        if (!empty($errors)) {
+            throw new Exception("Signup failed: " . implode(", ", $errors));
+        }
+        // Grab the user ID from signup
+        $userId = $signup->fetchUserId($uid);
 
-    // Grab the method from the signup-contr.classes.php
-    $userId = $signup->fetchUserId($uid); // pass the username(uid)
+        // Include and instantiate the ProfileInfoContr class
+        include "../classes/profileinfo.classes.php";
+        include "../classes/profileinfo-contr.classes.php";
+        
+        // Create profile Object and set default profile info
+        $profileInfo = new ProfileInfoContr($userId, $uid);
+        $profileInfo->setDefaultProfileInfo();
 
-    // Instantiate the ProfileInfoContr class
-    include "../classes/profileinfo.classes.php";
-    include "../classes/profileinfo-contr.classes.php";
-    
-    // Create profile Object
-    $profileInfo = new ProfileInfoContr($userId, $uid);
-    $profileInfo->defaultProfileInfo();
-
-    // Going back to the front page
-    header("location: ../index.php?error=none");
+        // Redirect to the front page with no errors
+        header("location: ../index.php?message=registered");
+        exit();
+    } catch (Exception $e) {
+        // Redirect to the front page with the appropriate error message
+        header("location: ../index.php?error=" . $e->getMessage());
+        exit();
+    }
 
 }
