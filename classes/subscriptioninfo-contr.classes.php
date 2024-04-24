@@ -37,4 +37,9 @@ class SubscriptionContr extends Subscription{
         return $subid[0];
      }
 
+     //Method to delete Subscription ID
+    public function removeSubscription($userId, $subId){
+        $this->deleteSubscription($userId, $subId);
+
+    }
 }

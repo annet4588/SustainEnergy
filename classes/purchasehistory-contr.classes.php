@@ -1,4 +1,5 @@
 <?php
+//PurchaseHistoryContr is designed to keep track of all purchases the user makes, subscription or greenCalc donations.
 
 class PurchaseHistoryContr extends PurchaseHistory{
 
@@ -10,6 +11,7 @@ class PurchaseHistoryContr extends PurchaseHistory{
     private $voucherAmount;
     private $paymentMethod;
 
+    //PurchaseHistoryContr contructor
    public function __construct($userId, $subId, $gcid, $purchaseDate, $shortfallScore,$voucherAmount, $paymentMethod){
 
     $this->userId = $userId;
@@ -73,3 +75,5 @@ class PurchaseHistoryContr extends PurchaseHistory{
         return $phid[0]['purchase_id'];
      }
 }
+
+

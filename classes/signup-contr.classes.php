@@ -1,4 +1,6 @@
 <?php
+//SignupContr class is designed to handle the user input data when signing up
+//and process the signup operation.
 class SignupContr extends Signup {
     private $uid;
     private $pwd;
@@ -6,6 +8,7 @@ class SignupContr extends Signup {
     private $email;
     private $errors = array();
 
+    //Signup class Constructor
     public function __construct($uid, $pwd, $pwdRepeat, $email) {
         $this->uid = $uid;
         $this->pwd = $pwd;
@@ -30,23 +33,25 @@ class SignupContr extends Signup {
     // Signup user
     private function signupUser() {
         if (!$this->emptyInput()) {
-            throw new Exception("Empty Input");
+            throw new Exception("All fields are required.");
         }
   
         if (!$this->invalidUid()) {
-            throw new Exception("Invalid Username");
+            throw new Exception("Username can only contain letters and numbers.");
         }
         
         if (!$this->invalidEmail()) {
-            throw new Exception("Invalid Email");
+            throw new Exception("Invalid email format, e.g. example@gmail.com");
         }
-        
+        if (!$this->pwdCheck()) {
+            throw new Exception("Password should be at least 6 characters long.");
+        }
         if (!$this->pwdMatch()) {
             throw new Exception("Passwords do not match");
         }
         
         if (!$this->uidTakenCheck()) {
-            throw new Exception("Username or Email is already taken");
+            throw new Exception("Username or Email is already taken, please choose another one.");
         }
 
         $this->setUser($this->uid, $this->pwd, $this->email);
@@ -71,6 +76,10 @@ class SignupContr extends Signup {
     private function pwdMatch() {
         return $this->pwd === $this->pwdRepeat;
     }
+    // Check if password is at least 6 characters long
+    private function pwdCheck() {
+        return strlen($this->pwd) >= 6;
+    }
 
     // Check if the user exists
     private function uidTakenCheck() {
@@ -82,4 +91,26 @@ class SignupContr extends Signup {
         $userId = $this->getUserId($uid);
         return $userId[0]["users_id"]; //return the first row of data we get from the database and the column name
     }
+
+     // Method to get all users
+     public function fetchAllUsers() {
+        // Instantiate the Signup class to access its methods
+        $signup = new Signup();
+
+        // Call the getAllUsers method to fetch all users
+        $users = $signup->getAllUsers();
+
+        // Return the array of users
+        return $users;
+    }
+   
+     // Method to remove a user
+     public function removeUser($uid) {
+        try {
+            $this->deleteUser($uid);
+        } catch (Exception $e) {
+            $this->errors[] = $e->getMessage();
+        }
+    }
 }
+

@@ -1,5 +1,4 @@
 <?php 
-
 class Login extends Dbh {
 
     //Method to validate the user credentials
@@ -31,6 +30,12 @@ class Login extends Dbh {
             session_start();
             $_SESSION['userid'] = $user['users_id'];
             $_SESSION['useruid'] = $user['users_uid'];
+
+             // Check if the user is admin and set isAdmin session variable
+        if ($user['users_uid'] === 'admin') {
+            $_SESSION['isAdmin'] = true;
+            $_SESSION['admin_uid'] = $user['users_id']; // Store admin's user ID
+        }
         } catch (PDOException $e) {
             // Handle database errors
             throw new Exception("Database error: " . $e->getMessage());
@@ -43,8 +48,7 @@ class Login extends Dbh {
         }
     }
 
-
-     // Find user by email or username
+     //Method to find user by email or username
     public function findUserByEmailOrPassword($email, $username){
         try {
             $stmt = $this->getConnection()->prepare('SELECT * FROM users WHERE users_uid = :username OR users_email = :email');
@@ -73,7 +77,7 @@ class Login extends Dbh {
         }
     }
 
-    // Reset Password
+    //Method to reset Password
     public function resetPassword($newPwdHash, $tokenEmail){
         try {
             $stmt = $this->getConnection()->prepare('UPDATE users SET users_pwd=:pwd WHERE users_email=:email');
@@ -102,6 +106,8 @@ class Login extends Dbh {
 
 //This class encapsulates the logic for authenticating a user 
 //based on provided credentials and handling sessions upon successful authentication. 
+
+
 //Additionally, it includes error handling for various scenarios, 
 //such as SQL statement execution failures and incorrect passwords.
 //    if(!$checkPwd){

@@ -38,6 +38,7 @@ class ResetPasswords {
     }
 
 
+    //Method to send email
     public function sendEmail(){
         //Sanitise POST data
         $usersEmail = filter_input(INPUT_POST, 'users_email', FILTER_VALIDATE_EMAIL);
@@ -84,6 +85,7 @@ class ResetPasswords {
         header("location: ../forgot_password.php");
     }
 
+    //Method to rest password
     public function resetPassword(){
         //Sanitize POST data
         $_POST = filter_input_array(INPUT_POST);
@@ -147,7 +149,7 @@ class ResetPasswords {
 
 $init = new ResetPasswords;
 
-//Ensure that user is sending a post request
+//Ensure that user is sending a post request, 2 Post requests send and rest
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //The value of hidden input in the forgotPassword form
     switch($_POST['type']){

@@ -31,6 +31,5 @@ class Dbh {
         }
         return $this->dbh;
     }
-
    
 }

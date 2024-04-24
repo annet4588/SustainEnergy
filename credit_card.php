@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<div class="row justify-content-center">';
         echo '<div class="col-md-6">';
         echo '<div class="alert alert-success" role="alert">';
-        echo 'Your card has been successfully added.';
+        echo 'Your card has been successfully added. To view it, simply click on "View my Cards" within your profile.';
         echo '</div>';
         echo '</div>';
         echo '</div>';

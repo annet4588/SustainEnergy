@@ -23,24 +23,21 @@ protected function setUser($uid, $pwd, $email){
 }
 
 protected function checkUser($uid, $email){
-   $stmt = $this->getConnection()->prepare('SELECT users_uid FROM users WHERE users_uid = ? OR users_email = ?');
-  
-   try {
-        // Attempt to execute the SQL statement
-        $stmt->execute(array($uid, $email));
-   } catch (PDOException $e) {
-        // Redirect to the index page with the appropriate error message
-        header("location: ../index.php?error=stmtfailed");
-        exit();
-   }
+    // Prepare the SQL statement to check for existing user
+    $stmt = $this->getConnection()->prepare('SELECT users_uid FROM users WHERE users_uid = ? OR users_email = ?');
 
-   // Check if we have any results back from the database
-   $resultCheck = $stmt->rowCount() > 0 ? false : true;
-   
-   // Close the statement
-   $stmt = null;
+    // Attempt to execute the SQL statement
+    $stmt->execute([$uid, $email]);
 
-   return $resultCheck;
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // If a result is found, return false (user already exists)
+    if ($result !== false) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 protected function getUserId($uid){
@@ -70,5 +67,51 @@ protected function getUserId($uid){
 
     // Return data
     return $profileDate;
+}
+
+// Method to fetch all users from the database
+public function getAllUsers() {
+    // Prepare the SQL statement to fetch all users
+    $stmt = $this->getConnection()->prepare('SELECT * FROM users');
+
+    try {
+        // Attempt to execute the SQL statement
+        $stmt->execute();
+    } catch (PDOException $e) {
+        // Handle the error, maybe log it or display a message
+        echo "Error: " . $e->getMessage();
+        exit(); // Stop execution
+    }
+
+    // Fetch all users as an associative array
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Close the statement
+    $stmt = null;
+
+    // Return the array of users
+    return $users;
+}
+
+//Method to delete user
+protected function deleteUser($uid){
+    // Prepare the SQL statement to delete the user
+    $stmt = $this->getConnection()->prepare('DELETE FROM users WHERE users_uid = ?;');
+
+    try {
+        // Attempt to execute the SQL statement
+        $stmt->execute(array($uid));
+    } catch (PDOException $e) {
+        // Redirect to the profile page with the appropriate error message
+        header("location: profile.php?error=deletefailed");
+        exit();
+    }
+
+    // Close the statement
+    $stmt = null;
+
+    // Redirect to a success page or perform any other actions as needed
+    header("location: success.php");
+    exit();
 }
 }

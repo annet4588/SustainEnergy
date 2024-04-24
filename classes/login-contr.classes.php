@@ -1,11 +1,12 @@
 <?php
 
+//The LoginContr class is designed to handle the user input data (username and password) 
+//and process the login operation.
 class LoginContr extends Login {
    
     private $uid;
     private $pwd;
     private $errors = array();
-
 
     //Constructor
     public function __construct($uid, $pwd){
@@ -20,8 +21,7 @@ class LoginContr extends Login {
         }catch(Exception $e){
             // Handle the exception
             $this->errors[]=$e->getMessage();
-        }
-        
+        }        
     }
 
     //Method to initiate the login process
@@ -49,6 +49,3 @@ class LoginContr extends Login {
         return $this->errors;
     }
 }
-
-//The LoginContr class is designed to handle the user input data (username and password) 
-//and process the login operation.

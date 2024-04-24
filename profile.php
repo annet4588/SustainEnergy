@@ -12,6 +12,11 @@ include_once "classes/dbh.classes.php";
 include_once "classes/profileinfo.classes.php";
 include_once "classes/profileinfo-contr.classes.php";
 include_once "classes/profileinfo-view.classes.php";
+
+include_once "classes/subsriptioninfo.classes.php";
+include_once "classes/subscriptioninfo-contr.classes.php";
+include_once "classes/subscriptioninfo-view.classes.php";
+
 $profileInfo = new ProfileInfoView();
 
 // Instantiate ProfileInfoContr class to retrieve profile data
@@ -20,7 +25,7 @@ $profileInfoContr = new ProfileInfoContr($_SESSION['userid'], $_SESSION['useruid
 // Fetch profile information
 $profileData = $profileInfoContr->getProfileInfo($_SESSION['userid']);
 
-var_dump($profileData);
+// var_dump($profileData);
 
 // Retrieve individual profile data
 $profileStatus = $profileData['profile_status'] ?? '';
@@ -31,11 +36,33 @@ $email = $profileData['email'] ?? '';
 $phoneNumber = $profileData['phone_number'] ?? '';
 $joinDate = $profileData['join_date'] ?? '';
 
+//Assign userid session to a variable
+$userId = $_SESSION['userid'];
+
+//Instance SubscriptionView class to get subscription id
+$subscriptionView = new SubscriptionView();
+$subId = $subscriptionView->fetchSubscriptionSingleId($userId);
+
+// Check if $subId is null before using it
+if ($subId !== null) {
+    // $subId is not null, proceed with using it
+    // Your existing code that relies on $subId can go here
+} else {
+    // $subId is null, handle this case gracefully
+    // For example, you can provide a default value or skip processing
+    // Here's an example of providing a default value:
+    $subId = null; // Assuming 0 indicates no subscription
+}
+
+if(isset($_SESSION['subid'])){
+    $subId = $_SESSION['subid'];
+}
 // Check if the user is subscribed
 $isSubscribed = $profileStatus === 'Active';
 
 // Retrieve current date
 $currentDate = date('Y-m-d');
+// var_dump($subId);
 ?>
 <body class="d-flex flex-column vh-100">
   <main class="flex-grow-1">
@@ -56,8 +83,12 @@ $currentDate = date('Y-m-d');
                         <input type="text" class="form-control" name="profile_status" readonly value="<?php echo $profileStatus;?>" />
                         <!-- Disable the button if user is subscribed -->
                         <button type="submit" class="btn btn-outline-success mt-3" name="subscribe" <?php if($isSubscribed) echo 'disabled'; ?>>
-                                    <?php echo $isSubscribed ? 'Subscribed' : 'Subscribe'; ?>
-                                </button>
+                            <?php echo $isSubscribed ? 'Subscribed' : 'Subscribe'; ?>
+                        </button>
+                        <form id= "unsubscribe" method="POST" action="unsubscribe.php">
+                            <input type="hidden" name="subid" value="<?php echo $subId; ?>">
+                            <button type="button" class="btn btn-outline-success mt-3" name="unsubscribeBtn" onclick="unsubscribe()" <?php if(!$isSubscribed) echo 'disabled';?>><?php echo $isSubscribed ? 'Unsubscribe' : 'Unsubscribe'; ?></button>
+                        </form> 
                         </div>
                     </form>
                         <form method="POST" action="includes/profileinfo.inc.php">
@@ -132,6 +163,21 @@ $currentDate = date('Y-m-d');
                         </div>
                     </div>
                 </div>
+                
+               <!-- Admin Card -->
+                <?php if(isset($_SESSION['useruid']) && $_SESSION['useruid'] === 'admin'): ?>
+                    <div class="col-md-10 d-flex p-3">
+                        <div class="card profile-bg profile-card" id="profile-card">
+                            <div class="card-body profile-content" id="profile-body">
+                                <!-- Content of the third card goes here -->
+                                <h4>View Users</h4>
+                                <h5>Delete Users</h5>
+                                <a href="admin.php" type="submit" name="adminBtn" class="btn btn-outline-success">Go</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
             </div>
         </div>
     </section>
@@ -141,6 +187,32 @@ $currentDate = date('Y-m-d');
 
  <?php
 include_once "footer.php";?>
+
+<!-- Include Bootstrap JS and jQuery -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+   
+    // function unsubscribe(event){
+    //      // Prevent the default behavior of the button click
+    //      event.preventDefault();
+    //     // Get the button element that was clicked
+    //     var btnClicked = event.target.name;
+        
+    //     // Check if the Unsubscribe button was clicked
+    //     if(btnClicked === 'unsubscribeBtn') {
+    //         // Change the action of the form to unsubscribe.php
+    //         document.getElementById('unsubscribe').action = "unsubscribe.php";
+            
+    //         // Submit the form
+    //         document.getElementById('unsubscribe').submit();
+    //     }
+    // }
+
+</script>    
     <style>
   #profile-card .center-card {
         display: flex;

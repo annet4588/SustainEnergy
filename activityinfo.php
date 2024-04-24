@@ -31,9 +31,9 @@ if(isset($_SESSION['userid'])) {
 // Output activity details
 echo '
 <body class="d-flex flex-column"> 
-<main class="container m-3 flex-grow vh-100">
+<main class="container m-3 pb-5 flex-grow">
 
-<div class="p-3">
+<div class="text-center p-3">
         <h3>Activity Info</h3>
     </div>
     <div class="card activity-bg activity-card p-3">
@@ -63,6 +63,7 @@ include_once "footer.php";
 ?>
 
 <!-- Include Bootstrap JS and jQuery -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -99,10 +100,13 @@ newButton.textContent = 'Add';
 // Append the button to a specific element in the DOM
 var container = document.getElementById('button-container'); // Replace 'button-container' with the ID of the container where you want to append the button
 container.appendChild(newButton);
-}
-
-   
+} 
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+
+
+
 
 

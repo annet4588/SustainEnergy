@@ -10,14 +10,14 @@ $activityInfo = new ActivityInfoView();
 $activityIds = $activityInfo->fetchActivityId();
 
 
-var_dump($activityIds);
+// var_dump($activityIds);
 // $activityObject = $activityInfo->fetchActivityObject();
 // var_dump($activityObject);
 ?>
 
 <body class="d-flex flex-column vh-100"> 
 <main class="container mt-5 flex-grow-1">
-    <div class="p-3">
+    <div class="text-center p-3">
         <h3>Activities</h3>
     </div>
     <section class="row justify-content-center">

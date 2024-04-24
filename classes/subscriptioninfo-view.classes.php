@@ -15,7 +15,13 @@ public function fetchAllSubscriptions($userId) {
 //Method to get a single ID
 public function fetchSubscriptionSingleId($userId){
     $subscriptionInfo = $this->getSubscriptionIds($userId);
-    //Passed subscription single ID
-    return $subscriptionInfo[0]; //Array ofset if added['subscription_id]    
+    // Check if the array is not empty before accessing its first element
+    if (!empty($subscriptionInfo)) {
+        // Passed subscription single ID
+        return $subscriptionInfo[0]; // Array offset if added['subscription_id]    
+    } else {
+        // Handle the case where the array is empty (no subscription)
+        return null; // Return null indicating no subscription
+    }
 }
 }

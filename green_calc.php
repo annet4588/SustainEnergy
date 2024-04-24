@@ -73,14 +73,14 @@ if (isset($_POST['delete_activity_id'])) {
     }
 }
 
-// Check if all 10 activities are chosen
-// if(count($_SESSION['green_calc']) == 10) {
-//     echo '<div class="alert alert-info m-3">
-//     <p>You have chosen all 10 activities. Thank you!</p>
-//     <p>Please Proceed to the Step 2 to Select Score!</p>
-//     </div>';
-// }
-
+if (count($_SESSION['green_calc']) == 10) {
+    // If all activities are chosen, enable the select boxes
+    echo "<script>";
+    echo "document.querySelectorAll('select[name=\"select-box\"]').forEach(function(selectElement) {";
+    echo "selectElement.disabled = false;";
+    echo "});";
+    echo "</script>";
+}
 
 // Check the session for activity details
 $activities_in_green_calc = isset($_SESSION['green_calc']) ? $_SESSION['green_calc'] : array();
@@ -134,7 +134,7 @@ $activities_in_green_calc = isset($_SESSION['green_calc']) ? $_SESSION['green_ca
                                         <div class="card-body profile-content text-center">
                                             
                                         <!-- Display default activity card -->
-                                            <select name="select-box" class="form-select" onchange="changeColour(this, <?php echo $i; ?>)">
+                                            <select name="select-box" class="form-select" onchange="changeColour(this, <?php echo $i; ?>)" disabled>
                                                 <option name="default" value="0">Select Score</option>
                                                 <option name="five-score" value="5" style="background-color: darkred">5% Score</option>
                                                 <option name="ten-score" value="10" style="background-color: green">10% Score</option>
@@ -185,7 +185,7 @@ $activities_in_green_calc = isset($_SESSION['green_calc']) ? $_SESSION['green_ca
                                         <input type="hidden" id="subid" name="subid" value="<?php echo $subId ?>" readonly>
                                         <input type="hidden" id="totalScore" name="total_score" value="<?php echo $totalScore ?>" readonly>
                                         <input type="text" id="voucherAmount" name="voucher_amount" value="<?php echo $voucherAmount ?>" readonly>
-                                        <button id="donateBtn" type="button" class="btn btn-outline-success" onclick="validateBeforeProceed()">Donate</button>
+                                        <button id="donateBtn" type="button" class="btn btn-outline-success" name="donateBtn" onclick="validateBeforeProceed()">Donate</button>
                                     </form>
                                 </div>
                             </div>
@@ -231,39 +231,6 @@ include_once "footer.php";
             document.body.appendChild(deleteActivityForm);
             deleteActivityForm.submit();
         }
-    }
-</script>
-
-<script>
-    function changeColour(selectElement, activityId) {
-        var selectedScore = selectElement.value;
-        // Change the background color of the select box based on the selected score
-        if (selectedScore == '5') {
-            selectElement.style.backgroundColor = 'darkred';
-        } else if (selectedScore == '10') {
-            selectElement.style.backgroundColor = 'green';
-        } else {
-            selectElement.style.backgroundColor = ''; // Reset to default
-        }
-        calculateTotalScore(); // Recalculate total score
-    }
-
-    function calculateTotalScore() {
-        var totalScore = 0;
-        // Loop through each select box and sum up the selected scores
-        document.querySelectorAll('select[name="select-box"]').forEach(function(selectElement) {
-            totalScore += parseInt(selectElement.value);
-        });
-        // Update the value of the total score input element
-        document.getElementById('totalScore').value = totalScore;
-
-
-        //Calculate voucher ammount
-        var maxScore = 100;
-        var remainingScore = maxScore - totalScore;
-        var voucherAmount = remainingScore > 0 ? remainingScore : 0;
-        document.getElementById('voucherAmount').value = voucherAmount;
-
     }
 </script>
 

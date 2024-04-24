@@ -60,4 +60,27 @@ class Subscription extends Dbh{
         // Close the statement
        $stmt = null;
     }
+
+   // Method to delete a subscription
+   public function deleteSubscription($userId, $subId){
+    try {
+        // Prepare the SQL statement
+        $stmt = $this->getConnection()->prepare('DELETE FROM subscriptions WHERE users_id = ? AND subscription_id = ?');
+    
+        // Attempt to execute the SQL statement
+        $stmt->execute(array($userId, $subId));
+    
+        // Check if any rows were affected
+        if ($stmt->rowCount() == 0) {
+            throw new Exception('No subscription found for the user with the given subscription ID');
+        }
+    
+        // Close the statement
+        $stmt = null;
+    
+    } catch (PDOException $e) {
+        // Handle PDO exceptions
+        throw new Exception("Database error: " . $e->getMessage());
+    }
+}
 }

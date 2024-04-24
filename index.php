@@ -17,7 +17,7 @@
         // Check if there's a message parameter in the URL passed from signup.php
         if(isset($_GET['message']) && $_GET['message'] == 'registered') {
             // Display the success message
-            echo "<h6>You have now been registered. Please login.</h6>";
+            echo "<h6>You have now registered. Please login.</h6>";
         }
         ?>
         </div>
@@ -36,7 +36,7 @@
       <div class="card">
         <img class="img-main img-fluid" src="images/sustainMain.jpeg" class="img-fluid">
         <div class="card-img-overlay d-flex justify-content-center align-items-center">
-        <h2 class="card-title text-center" style="margin-top:100px">Make Changes Help Our Planet!</h2>
+        <h2 class="card-title text-center" style="margin-top:100px; color:yellow;">Make Changes Help Our Planet!</h2>
         <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         <p class="card-text"><small>Last updated 3 mins ago</small></p> -->
   </div>
@@ -56,7 +56,7 @@
                 <div class="col-sm-6 col-lg-3 d-flex p-3">
                     <a class="card card-height-fixed" href="about.php" title="Real-Time Impact">
                         <div class="card">
-                        <img class="card-img-top" src="images/start-now2.jpeg" alt="Climate Action">
+                        <img class="card-img-top" src="images/start-now2.jpeg" alt="Climate Action" style="height:170px;">
                         </div>
                         <div class="card-body">
                             <div class="card-title card-title-fixed-height">Real-Time Impact</div>
@@ -69,7 +69,7 @@
                 <div class="col-sm-6 col-lg-3 d-flex p-3">
                     <a class="card card-height-fixed" href="about.php" title="Creativity and Innovation">
                         <div class="card">
-                            <img class="card-img-top" src="images/creative_img.jpg" alt="Creativity Image">
+                            <img class="card-img-top" src="images/creative_img2.png" alt="Creativity Image" style="height:170px;">
                         </div>
                         <div class="card-body">
                             <div class="card-title card-title-fixed-height">Creativity and Innovation</div>
@@ -82,7 +82,7 @@
                 <div class="col-sm-6 col-lg-3 d-flex p-3">
                     <a class="card card-height-fixed" href="about.php" title="Community Engagement">
                         <div class="card">
-                            <img class="card-img-top" src="images/community_eng.jpg" alt="Community Engagement">
+                            <img class="card-img-top" src="images/community_eng.jpg" alt="Community Engagement" style="height:170px;">
                         </div>
                         <div class="card-body">
                             <div class="card-title card-title-fixed-height">Community Engagement</div>
@@ -95,7 +95,7 @@
                 <div class="col-sm-6 col-lg-3 d-flex p-3">
                     <a class="card card-height-fixed" href="about.php" title="Champion for the Planet">
                         <div class="card">
-                            <img class="card-img-top" src="images/save_planet1.png" alt="Save Planet">
+                            <img class="card-img-top" src="images/save_planet1.png" alt="Save Planet" style="height:170px;">
                         </div>
                         <div class="card-body">
                             <div class="card-title card-title-fixed-height">Champion for the Planet</div>

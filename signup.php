@@ -17,39 +17,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $pwdRepeat = htmlspecialchars($_POST["pwdrepeat"], ENT_QUOTES, 'UTF-8');
         $email = htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8');
 
-        // Validate input data
-        if(empty($uid) || empty($pwd) || empty($pwdRepeat) || empty($email)) {
-            $errors[] = "All fields are required.";
-        }
-        if(!preg_match("/^[a-zA-Z0-9]*$/", $uid)) {
-            $errors[] = "Username can only contain letters and numbers.";
-        }
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Invalid email format.";
-        }
-        if($pwd !== $pwdRepeat) {
-            $errors[] = "Passwords do not match.";
-        }
+        // Create a SignupContr object to handle signup
+        $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
 
-        if(empty($errors)) {
+        // Process signup
+        $signup->processSignup();
 
-            // Create signup Object and process signup
-            $signup = new SignupContr($uid, $pwd, $pwdRepeat, $email);
-            $signup->processSignup();
+        // Get any errors from the signup process
+        $errors = $signup->getErrors();
 
-            $errors = $signup->getErrors();
+        if (empty($errors)) {
+            // If there are no errors, proceed with other signup-related tasks
 
-            if (!empty($errors)) {
-                throw new Exception("Signup failed: " . implode(", ", $errors));
-            }
-            
             // Grab the user ID from signup
             $userId = $signup->fetchUserId($uid);
 
             // Include and instantiate the ProfileInfoContr class
             include "classes/profileinfo.classes.php";
             include "classes/profileinfo-contr.classes.php";
-            
+
             // Create profile Object and set default profile info
             $profileInfo = new ProfileInfoContr($userId, $uid);
             $profileInfo->setDefaultProfileInfo();
@@ -66,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 
 <body class="d-flex flex-column vh-100"> 
-<main class="login-container mt-5 flex-grow-1" style="background-image: url('images/nature1.jpg');">
+<main class="login-container mt-5 pb-5 flex-grow-1" style="background-image: url('images/nature1.jpg');">
     <div class="container d-flex justify-content-center align-items-start" style="min-height: 100vh; width: 400px">
         <div class="card card card-login p-3" style="margin-top:50px">
             <div class="card-body m-3">

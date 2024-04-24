@@ -6,15 +6,17 @@ include_once 'header.php';
 
     <section class="center-card">
 
-        <div class="container-fluid p-3">
-        <div class="card p-3">
+    <div class="container-fluid p-3">
+    <h3 class="text-center p-3">About Us</h3>
+    <div class="card p-3">
     <div id="our-mission" class="paragraph-border">
         <div class="row">
-            <div class="wrapper-infos col-lg-6">
+            <div class="wrapper-infos col-lg-6 p-3">
                 <div class="field field-name-title p-3">
-                    <h3>About Us</h3>
+                    <h3>Who We are</h3>
                 </div>
-                <div class="field field-paragraph p-3">
+                <div class="field field-paragraph p-3 pb-2">
+                <p> SustainEnergy is a web-based platform designed for companies to subscribe and engage in sustainable practices. Our goal is to encourage and monitor green activities, fostering environmental responsibility. We focus on delivering a seamless user experience with a visually appealing interface, prioritising engagement, streamlined processes, security, and accessibility for all users.</p>
                 <p> Are you ready to start an electrifying journey that puts YOU at the forefront of saving our precious planet? Step into the world of interactive eco-action where every click, every choice you make has the power to make a monumental difference.</p>
             <p> Experience the thrill of real-time impact as you dive into immersive challenges and collaborative missions designed to tackle the most pressing environmental issues of our time. From reforestation initiatives to renewable energy projects, your participation isn't just encouraged—it's essential!</p>
                 </div>
@@ -33,14 +35,14 @@ include_once 'header.php';
                 </div>
             </div>
             <div class="wrapper-image col-lg-6">
-                <div class="field field-name-image">    
+                <div class="field field-name-image mt-5 pt-3">    
                     <img class="img img-fluid img-goals" src="images/sustainbulb.jpg" width="700" height="400" alt="goals">         
                 </div>
             </div>
             </div>
         </div>
     </div>
-            
+
       <!-- GOALS-->
     
     <div class="card flex-grow-1 p-3">
@@ -68,7 +70,7 @@ include_once 'header.php';
                 <div class="col-sm-6 col-lg-3 d-flex p-3">
                     <a class="card card-height-fixed" href="about.php" title="Creativity and Innovation">
                         <div class="card">
-                            <img class="card-img-top" src="images/creative_img.jpg" alt="Creativity Image">
+                            <img class="card-img-top" src="images/creative_img2.png" alt="Creativity Image">
                         </div>
                         <div class="card-body">
                             <div class="card-title card-title-fixed-height">Creativity and Innovation</div>

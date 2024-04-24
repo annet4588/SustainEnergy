@@ -43,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subscribe'])){ //post s
     $profileInfoContr->updateProfileStatus($profileStatus, $userId);
 
     // Display the title and form
-    echo '<div class="container mt-4" style="height: 100vh;">'; // Moved here
+    echo '<div class="container mt-4 pb-3" >'; // Moved here
     echo '<h3 class="text-center p-3">Shopping cart</h3>';
     echo '<div class="row justify-content-center p-3">';
     echo '<div class="col-md-8">';
@@ -130,7 +130,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         var_dump($gcid);
 
         // Display the title and form
-        echo '<div class="container mt-4" style="height: 100vh;">'; // Moved here
         echo '<h3 class="text-center p-3">Shopping cart</h3>';
         echo '<div class="row justify-content-center p-3">';
         echo '<div class="col-md-8">';

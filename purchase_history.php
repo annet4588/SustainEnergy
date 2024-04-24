@@ -31,8 +31,8 @@ try {
             echo '<h5 class="card-title">Your Purchase</h5>';
             echo '<div class="alert alert-success" role="alert">';
             echo '<h5 class="mt-2">Purchase ID:</h5>';
-            echo '<p>' . $purchase['purchase_id'] . '</p>';
-            echo '<h5 class="mt-2">Shortfall Score:</h5>';
+            // echo '<p>' . $purchase['purchase_id'] . '</p>';
+            // echo '<h5 class="mt-2">Shortfall Score:</h5>';
             echo '<p>' . $purchase['shortfall_score'] . '</p>';
             echo '<h5 class="mt-2">Voucher Amount:</h5>';
             echo '<p> £' . $purchase['voucher_amount'] . '</p>';
