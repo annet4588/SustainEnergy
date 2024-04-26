@@ -17,23 +17,25 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] !== true) {
 $signupContr = new SignupContr(null, null, null, null);
 
 // Handle user removal
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["adminBtn"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["removeBtn"])) {
     // Get the user ID to be removed from the form submission
     $userIdToRemove = $_POST["users_id"];
+    var_dump($userIdToRemove); // This should now work
 
     // Delete the user from the database
-    $signupContr->removeUser($userIdToRemove);
-    var_dump($userIdToRemove);
-
-    // After deleting the user, redirect back to the admin page
-    header("Location: admin.php");
-    exit();
+    try {
+        $signupContr->removeUser($userIdToRemove);
+        // Redirect back to the admin page after successful deletion
+        header("Location: admin.php");
+        exit();
+    } catch (Exception $e) {
+        // Handle any errors that occur during user removal
+        echo "Error removing user: " . $e->getMessage();
+    }
 }
-
 // Fetch users from the database
 $users = $signupContr->fetchAllUsers();
 // var_dump($users);
-// Display users
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +46,7 @@ $users = $signupContr->fetchAllUsers();
 </head>
 <body>
     <h1>Admin Page</h1>
-    <table>
+    <table id="userTable">
         <tr>
             <th>User ID</th>
             <th>Username</th>
@@ -52,14 +54,14 @@ $users = $signupContr->fetchAllUsers();
             <th>Action</th>
         </tr>
         <?php foreach ($users as $user): ?>
-            <tr>
+            <tr id="userRow_<?php echo $user["users_id"]; ?>">
                 <td><?php echo $user["users_id"]; ?></td>
                 <td><?php echo $user["users_uid"]; ?></td>
                 <td><?php echo $user["users_email"]; ?></td>
                 <td>
-                <form id="removeForm_<?php echo $user["users_id"]; ?>" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <form id="removeForm_<?php echo $user["users_id"]; ?>" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                         <input type="hidden" name="users_id" value="<?php echo $user["users_id"]; ?>">
-                        <button type="submit" class="btn btn-outline-success removeBtn" name="remove_user" onclick="confirmRemove(<?php echo $user["users_id"];?>)">Remove</button>
+                        <button type="submit" class="btn btn-outline-success removeBtn" onclick="confirmRemove(<?php echo $user['users_id'];?>)">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -69,12 +71,17 @@ $users = $signupContr->fetchAllUsers();
 </html>
 <?php include_once "footer.php"; ?>
 <script>
-     
-        function confirmRemove(userId) {
-            if (confirm('Are you sure you want to remove this user?')) {
-                document.getElementById('removeForm_' + userId).submit();
-                
+    function confirmRemove(userId) {
+        console.log('User ID to remove:', userId); 
+        if (confirm('Are you sure you want to remove this user?')) {
+            // Remove the corresponding row from the table
+            var rowToRemove = document.getElementById('userRow_' + userId);
+            if (rowToRemove) {
+                rowToRemove.remove();
             }
+            
+            // Submit the form to remove the user from the database
+            document.getElementById('removeForm_' + userId).submit();
         }
-    
+    }
 </script>

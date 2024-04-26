@@ -94,24 +94,29 @@ public function getAllUsers() {
 }
 
 //Method to delete user
-protected function deleteUser($uid){
+protected function deleteUser($userId){
     // Prepare the SQL statement to delete the user
-    $stmt = $this->getConnection()->prepare('DELETE FROM users WHERE users_uid = ?;');
+    $stmt = $this->getConnection()->prepare('DELETE FROM users WHERE users_id = ?;');
 
     try {
         // Attempt to execute the SQL statement
-        $stmt->execute(array($uid));
+        $stmt->execute(array($userId));
+         // Debugging: Output user ID being deleted
+         echo "User with ID $userId has been deleted successfully.";
+         
     } catch (PDOException $e) {
-        // Redirect to the profile page with the appropriate error message
-        header("location: profile.php?error=deletefailed");
+        // Redirect to the admin page with the appropriate error message
+        // Debugging: Output error message if deletion fails
+        echo "Error deleting user: " . $e->getMessage();
+        // header("location: admin.php?error=deletefailed");
         exit();
     }
 
     // Close the statement
     $stmt = null;
 
-    // Redirect to a success page or perform any other actions as needed
-    header("location: success.php");
+    // Redirect 
+    header("location: admin.php");
     exit();
 }
 }

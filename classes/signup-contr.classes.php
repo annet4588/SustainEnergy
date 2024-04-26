@@ -105,9 +105,9 @@ class SignupContr extends Signup {
     }
    
      // Method to remove a user
-     public function removeUser($uid) {
+     public function removeUser($userId) {
         try {
-            $this->deleteUser($uid);
+            $this->deleteUser($userId);
         } catch (Exception $e) {
             $this->errors[] = $e->getMessage();
         }
