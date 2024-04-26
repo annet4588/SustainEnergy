@@ -12,30 +12,28 @@ if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] !== true) {
     header("Location: login.php");
     exit();
 }
-
+$userDeleted = false;
 // Create an instance of SignupContr class
 $signupContr = new SignupContr(null, null, null, null);
+// Fetch users from the database
+$users = $signupContr->fetchAllUsers();
+// var_dump($users);
 
 // Handle user removal
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["removeBtn"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
     // Get the user ID to be removed from the form submission
-    $userIdToRemove = $_POST["users_id"];
-    var_dump($userIdToRemove); // This should now work
+    $userIdToRemove = $_POST["userId"];
 
-    // Delete the user from the database
+   // Delete the user from the database
     try {
-        $signupContr->removeUser($userIdToRemove);
-        // Redirect back to the admin page after successful deletion
-        header("Location: admin.php");
-        exit();
+        $signupContr->removeUser($userIdToRemove); // Pass userId directly
+        $userDeleted = true;
     } catch (Exception $e) {
         // Handle any errors that occur during user removal
         echo "Error removing user: " . $e->getMessage();
     }
 }
-// Fetch users from the database
-$users = $signupContr->fetchAllUsers();
-// var_dump($users);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +43,15 @@ $users = $signupContr->fetchAllUsers();
     <title>Admin Page</title>
 </head>
 <body>
-    <h1>Admin Page</h1>
+    <h2>Admin Page</h2>
+    <?php
+    // Display message if a user was successfully deleted
+    if ($userDeleted) {
+        echo '<div class="alert alert-info m-3">
+                <p>The user was deleted successfully!</p>
+            </div>';
+    }
+    ?>
     <table id="userTable">
         <tr>
             <th>User ID</th>
@@ -60,8 +66,8 @@ $users = $signupContr->fetchAllUsers();
                 <td><?php echo $user["users_email"]; ?></td>
                 <td>
                     <form id="removeForm_<?php echo $user["users_id"]; ?>" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-                        <input type="hidden" name="users_id" value="<?php echo $user["users_id"]; ?>">
-                        <button type="submit" class="btn btn-outline-success removeBtn" onclick="confirmRemove(<?php echo $user['users_id'];?>)">Remove</button>
+                        <input type="hidden" name="userId" value="<?php echo $user["users_id"]; ?>">
+                        <button type="submit" class="btn btn-outline-success removeBtn" onclick="handleSubmit(event, <?php echo $user['users_id'];?>)">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -70,18 +76,70 @@ $users = $signupContr->fetchAllUsers();
 </body>
 </html>
 <?php include_once "footer.php"; ?>
+
+
+<!-- Include Bootstrap JS and jQuery -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    function confirmRemove(userId) {
-        console.log('User ID to remove:', userId); 
+    // Function to handle form submission
+    function handleSubmit(event, userId) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+        
+        // Get the form ID from the event
+        var formId = event.target.form.id;
+        
+        // Show confirmation dialog
         if (confirm('Are you sure you want to remove this user?')) {
-            // Remove the corresponding row from the table
-            var rowToRemove = document.getElementById('userRow_' + userId);
-            if (rowToRemove) {
-                rowToRemove.remove();
-            }
-            
-            // Submit the form to remove the user from the database
-            document.getElementById('removeForm_' + userId).submit();
+            // If confirmed, submit the form
+            document.getElementById(formId).submit();
+        } else {
+            // If canceled, do nothing
+            return;
         }
     }
 </script>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>

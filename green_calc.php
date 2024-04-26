@@ -235,6 +235,7 @@ include_once "footer.php";
 </script>
 
 <script>
+    //Function to change the colour for the points
     function changeColour(selectElement, activityId) {
         var selectedScore = selectElement.value;
         // Change the background color of the select box based on the selected score
