@@ -20,8 +20,8 @@ The SustainEnergy webapp aims to achieve the following key outcomes:
 
 ### Features
 
-- **User-Friendly Interface**: Consistent screen design, easy navigation and guidance, customisation to enhance usability.
 - **Promotional Information on Sustainability**: Clear messaging and educational content to encourage environmental responsibility among companies.
+- **User-Friendly Interface**: Consistent screen design, easy navigation and guidance, customisation to enhance usability.
 - **Engaging Green Activities**: Choice of Green Activities with information for companies to choose and commit to sustainable practices. 
 - **Scoring System**: Green Calculator with Grading Criteria to calculate companies' environmental impact.
 - **Financial Support for Green Initiatives**: Voucher purchase system to enable companies to contribute financially to green initiatives.

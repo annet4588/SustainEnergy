@@ -63,6 +63,17 @@ $isSubscribed = $profileStatus === 'Active';
 // Retrieve current date
 $currentDate = date('Y-m-d');
 // var_dump($subId);
+
+//Instance of SubscriptionContr
+$subscriptionContr = new SubscriptionContr($userId, $subId);
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POST['subid'])){
+    $userIdToRemove = $_POST['userid'];
+    $subIdToRemove = $_POST['subid'];
+    
+    //
+    $subscriptionContr->deleteSubscription($userId, $subId);
+}
 ?>
 <body class="d-flex flex-column vh-100">
   <main class="flex-grow-1">
@@ -85,10 +96,12 @@ $currentDate = date('Y-m-d');
                         <button type="submit" class="btn btn-outline-success mt-3" name="subscribe" <?php if($isSubscribed) echo 'disabled'; ?>>
                             <?php echo $isSubscribed ? 'Subscribed' : 'Subscribe'; ?>
                         </button>
-                        <form id= "unsubscribe" method="POST" action="unsubscribe.php">
-                            <input type="hidden" name="subid" value="<?php echo $subId; ?>">
-                            <button type="button" class="btn btn-outline-success mt-3" name="unsubscribeBtn" onclick="unsubscribe()" <?php if(!$isSubscribed) echo 'disabled';?>><?php echo $isSubscribed ? 'Unsubscribe' : 'Unsubscribe'; ?></button>
-                        </form> 
+                        <form id="unsubscribeForm" method="POST" action="unsubscribe.php">
+                            <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+                            <input type="hidden" name="subid" id="subid" value="<?php echo $subId; ?>">
+                            <button type="button" class="btn btn-outline-success mt-3" name="unsubscribeBtn" onclick="unsubscribe(event, <?php echo $subId; ?>)" <?php if(!$isSubscribed) echo 'disabled';?>><?php echo $isSubscribed ? 'Unsubscribe' : 'Unsubscribe'; ?></button>
+                        </form>
+
                         </div>
                     </form>
                         <form method="POST" action="includes/profileinfo.inc.php">
@@ -196,22 +209,26 @@ include_once "footer.php";?>
 
 <script>
    
-    // function unsubscribe(event){
-    //      // Prevent the default behavior of the button click
-    //      event.preventDefault();
-    //     // Get the button element that was clicked
-    //     var btnClicked = event.target.name;
+   // Function to handle unsubscribe
+function unsubscribe(event, subId) {
+    // Prevent the default behavior of the button click
+    event.preventDefault();
+    
+    // Show confirmation dialog
+    if (confirm('Are you sure you want to unsubscribe?')) {
+        // Change the action of the form to unsubscribe.php
+        document.getElementById('unsubscribeForm').action = "unsubscribe.php";
         
-    //     // Check if the Unsubscribe button was clicked
-    //     if(btnClicked === 'unsubscribeBtn') {
-    //         // Change the action of the form to unsubscribe.php
-    //         document.getElementById('unsubscribe').action = "unsubscribe.php";
-            
-    //         // Submit the form
-    //         document.getElementById('unsubscribe').submit();
-    //     }
-    // }
-
+        // Update the value of the hidden input field
+        document.getElementById('subid').value = subId;
+        
+        // Submit the form
+        document.getElementById('unsubscribeForm').submit();
+    } else {
+        // If canceled, do nothing
+        return;
+    }
+}
 </script>    
     <style>
   #profile-card .center-card {
