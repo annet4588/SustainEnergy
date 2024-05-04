@@ -60,6 +60,9 @@ if(isset($_SESSION['subid'])){
 // Check if the user is subscribed
 $isSubscribed = $profileStatus === 'Active';
 
+//Ckeck if the user is Blocked
+$isUserBlocked = $profileStatus === 'Blocked';
+
 // Retrieve current date
 $currentDate = date('Y-m-d');
 // var_dump($subId);
@@ -73,8 +76,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
     
     //
     $subscriptionContr->deleteSubscription($userId, $subId);
-}
-?>
+}?>
 <body class="d-flex flex-column vh-100">
   <main class="flex-grow-1">
   <div class="p-3 text-center">
@@ -87,57 +89,58 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
                 <div class="card profile-bg profile-card" id="profile-card">
                 <div class="card-body profile-info" id="profile-body">  
                     <img class="rounded-circle" src="activityImg/img_default.png">
-                    <h4><?php echo $_SESSION["useruid"] ?></h4>
+                    <h4 class="px-4 py-2 m-4"><?php echo $_SESSION["useruid"] ?></h4>
                     <form method="POST" action="shopping_cart.php">
                     <div class="form-group">
                     <label for="profile_status">Company status</label>
                         <input type="text" class="form-control" name="profile_status" readonly value="<?php echo $profileStatus;?>" />
-                        <!-- Disable the button if user is subscribed -->
-                        <button type="submit" class="btn btn-outline-success mt-3" name="subscribe" <?php if($isSubscribed) echo 'disabled'; ?>>
-                            <?php echo $isSubscribed ? 'Subscribed' : 'Subscribe'; ?>
+                        <!-- Disable the button if user is Subscribed or Blocked-->
+                        <button type="submit" class="btn btn-outline-success mt-3" name="subscribe" <?php if($isSubscribed || $isUserBlocked) echo 'disabled'; ?>>
+                            <?php echo $isSubscribed ? 'Subscribed' : ($isUserBlocked ? 'Blocked' : 'Subscribe'); ?>
                         </button>
                         <form id="unsubscribeForm" method="POST" action="unsubscribe.php">
                             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
                             <input type="hidden" name="subid" id="subid" value="<?php echo $subId; ?>">
-                            <button type="button" class="btn btn-outline-success mt-3" name="unsubscribeBtn" onclick="unsubscribe(event, <?php echo $subId; ?>)" <?php if(!$isSubscribed) echo 'disabled';?>><?php echo $isSubscribed ? 'Unsubscribe' : 'Unsubscribe'; ?></button>
+                            <button type="button" class="btn btn-outline-success mt-3" name="unsubscribeBtn" onclick="unsubscribe(event, <?php echo $subId; ?>)" <?php if(!$isSubscribed) echo 'disabled';?>><?php echo $isSubscribed ? 'Unsubscribe' : ($isUserBlocked ? 'Blocked' : 'Unsubscribe'); ?></button>
                         </form>
+                        </div>
 
+
+                     <!-- Profile Update Form -->
+                    <form method="POST" action="includes/profileinfo.inc.php">
+                        <!-- Include a hidden input field for the profile ID -->
+                        <input type="hidden" name="profiles_id" value="<?php echo $profileId; ?>">
+                        <div class="form-group">
+                            <label for="company_name">Company Name</label>
+                            <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" value="<?php echo $companyName;?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="<?php echo $firstName;?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="<?php echo $lastName;?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Update Email" value="<?php echo $email;?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Phone Number" value="<?php echo $phoneNumber;?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="join_date">Date Registered</label>
+                            <input type="text" class="form-control" id="join_date" name="join_date" value="<?php echo $currentDate; ?>">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-success mt-3" name="update_profile" <?php if($isUserBlocked) echo 'disabled'; ?>>Update Profile</button>
                         </div>
                     </form>
-                        <form method="POST" action="includes/profileinfo.inc.php">
-                            <!-- Include a hidden input field for the profile ID -->
-                            <input type="hidden" name="profiles_id" value="<?php echo $profileId; ?>">
-                           <div class="form-group">
-                                <label for="company_name">Company Name</label>
-                                <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" value="<?php echo $companyName;?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="<?php echo $firstName;?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="<?php echo $lastName;?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Update Email" value="<?php echo $email;?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone_number">Phone Number</label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Phone Number" value="<?php echo $phoneNumber;?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="join_date">Date Registered</label>
-                                <input type="text" class="form-control" id="join_date" name="join_date" value="<?php echo $currentDate; ?>">
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-outline-success mt-3" name="update_profile">Update Profile</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
+        </div>
 
             <!-- Two Cards Aligned Above Each Other (Right) -->
             <div class="col-md-12 col-lg-6">
@@ -148,7 +151,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
                             <!-- Content of the second card goes here -->
                             <h4>Achievements</h4>
                             <h5>Certificates</h5>
-                            <a href="certificate.php" type="submit" class="btn btn-outline-success">View</a>
+                            <a href="certificate.php" type="submit" class="btn btn-outline-success <?php if($isUserBlocked) echo 'disabled'; ?>">View</a>
                         </div>
                     </div>
                 </div>
@@ -160,8 +163,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
                             <!-- Content of the third card goes here -->
                             <h4>Payment</h4>
                             <h5>Cards</h5>                            
-                            <a href="credit_card.php" type="submit" class="btn btn-outline-success">Add Card</a>  
-                            <a href="credit_card_added.php" type="submit" class="btn btn-outline-success">View My Cards</a>                
+                            <a href="credit_card.php" type="submit" class="btn btn-outline-success <?php if($isUserBlocked) echo 'disabled'; ?>">Add Card</a>  
+                            <a href="credit_card_added.php" type="submit" class="btn btn-outline-success <?php if($isUserBlocked) echo 'disabled'; ?>">View My Cards</a>                
                         </div>
                     </div>
                 </div>
@@ -172,12 +175,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
                             <!-- Content of the third card goes here -->
                             <h4>History</h4>
                             <h5>Purchase</h5>
-                            <a href="purchase_history.php" type="submit" class="btn btn-outline-success">Go</a>
+                            <a href="purchase_history.php" type="submit" class="btn btn-outline-success <?php if($isUserBlocked) echo 'disabled'; ?>">Go</a>
                         </div>
                     </div>
                 </div>
                 
-               <!-- Admin Card -->
+               <!-- Admin Card Only visible to Admin-->
                 <?php if(isset($_SESSION['useruid']) && $_SESSION['useruid'] === 'admin'): ?>
                     <div class="col-md-10 d-flex p-3">
                         <div class="card profile-bg profile-card" id="profile-card">

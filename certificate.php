@@ -36,6 +36,7 @@ try {
             echo '<p>' . $certificate['certificate_id'] . '</p>';
             echo '<h5 class="mt-2"></h5>';
             echo '<img  style="width:150px; height:150px;" src="images/' . $certificate['certificate_img'] . '">';
+            echo '<h5 class="text-center p-3">Everyone is a Winner!</h5>';
             echo '</div>';
             echo '</div>';
             echo '</div>';

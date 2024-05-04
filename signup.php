@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Create password">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group pb-3">
                         <label for="confirm_password">Confirm Password</label>
                         <input type="password" class="form-control" id="pwdrepeat" name="pwdrepeat" placeholder="Confirm password" >
                     </div>

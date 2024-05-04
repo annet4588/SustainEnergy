@@ -14,7 +14,12 @@ include_once "classes/purchasehistory-view.classes.php";
 // Fetch purchase history details using PurchaseHistoryView class
 $purchaseHistoryInfo = new PurchaseHistoryView();
 $userId = $_SESSION['userid'] ?? null;
-
+if(isset($_SESSION['subid'])){
+    $subId = $_SESSION['subid'];
+}
+if(isset($_SESSION['gcid'])){
+    $gcid = $_SESSION['gcid'];
+}
 try {
     // Attempt to fetch purchase history for the user
     $purchaseHistoryIds = $purchaseHistoryInfo->fetchPurchaseHistory($userId);
@@ -31,10 +36,10 @@ try {
             echo '<h5 class="card-title">Your Purchase</h5>';
             echo '<div class="alert alert-success" role="alert">';
             echo '<h5 class="mt-2">Purchase ID:</h5>';
-            // echo '<p>' . $purchase['purchase_id'] . '</p>';
+            echo '<p>' . $purchase['purchase_id'] . '</p>';
             // echo '<h5 class="mt-2">Shortfall Score:</h5>';
-            echo '<p>' . $purchase['shortfall_score'] . '</p>';
-            echo '<h5 class="mt-2">Voucher Amount:</h5>';
+            // echo '<p>' . $purchase['shortfall_score'] . '</p>';
+            echo '<h5 class="mt-2">Amount paid:</h5>';
             echo '<p> £' . $purchase['voucher_amount'] . '</p>';
             echo '<h5 class="mt-2">Payment Date:</h5>';
             echo '<p>' . $purchase['purchase_date'] . '</p>';

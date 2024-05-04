@@ -69,6 +69,12 @@ class Subscription extends Dbh{
     
         // Attempt to execute the SQL statement
         $stmt->execute(array($userId, $subId));
+
+        // Debugging: Output user ID being deleted
+        echo "Subscription with ID $subId has been deleted successfully.";
+
+        //Update the profile status 
+        $this->updateProfileStatus($userId, "Inactive");
     
         // Check if any rows were affected
         if ($stmt->rowCount() == 0) {
@@ -82,5 +88,19 @@ class Subscription extends Dbh{
         // Handle PDO exceptions
         throw new Exception("Database error: " . $e->getMessage());
     }
-}
+
+    }
+    //Method to update the profile status 
+    public function updateProfileStatus($userId, $status){
+        try{
+            //Prepare the SQL statement
+            $stmt = $this->getConnection()->prepare('UPDATE profiles SET profile_status=? WHERE users_id=?');
+            $stmt->execute(array($status, $userId));
+            $stmt->closeCursor();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
+    }
+
+
 }

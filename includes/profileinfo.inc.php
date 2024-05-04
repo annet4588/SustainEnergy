@@ -10,7 +10,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         exit();
     }
 
-
     $userId = $_SESSION['userid'];
     $uid = $_SESSION['useruid'];
     $companyName = htmlspecialchars($_POST['company_name'], ENT_QUOTES, 'UTF-8');
@@ -22,8 +21,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     // Fetch current date
     $joinDate = date('Y-m-d'); // Format: YYYY-MM-DD
 
-    
-   
     //Access to classes
     include_once "../classes/dbh.classes.php";
     include_once "../classes/profileinfo.classes.php";

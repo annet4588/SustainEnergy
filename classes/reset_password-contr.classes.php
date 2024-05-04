@@ -149,7 +149,7 @@ class ResetPasswords {
 
 $init = new ResetPasswords;
 
-//Ensure that user is sending a post request, 2 Post requests send and rest
+//Ensure that user is sending a post request, 2 Post requests here: send and rest
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //The value of hidden input in the forgotPassword form
     switch($_POST['type']){

@@ -41,9 +41,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subscribe'])){ //post s
 //    var_dump($subId);
     // Retrieve individual profile data  
     $profileInfoContr->updateProfileStatus($profileStatus, $userId);
+    
 
     // Display the title and form
-    echo '<div class="container mt-4 pb-3" >'; // Moved here
+    echo '<div class="container mt-4 pb-3 vh-100" >'; // Moved here
     echo '<h3 class="text-center p-3">Shopping cart</h3>';
     echo '<div class="row justify-content-center p-3">';
     echo '<div class="col-md-8">';
@@ -71,7 +72,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subscribe'])){ //post s
     echo '<h5 class= "mt-2">Payment Method</h5>';
     echo '<div class="d-flex">'; // Flexbox styling to center the select box
     echo '<select id="payment_method" name="payment_method" class="form-select form-control" style="width: auto;">';
-    echo '<option value="credit_card">Credit Card</option>';
+    echo '<option value="credit card">Credit Card</option>';
     echo '<option value="paypal">PayPal</option>';
     echo '</select>';
     echo '</div>'; // End of flexbox container
@@ -126,12 +127,12 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $gcid = $greenCalcInfo->fetchGreenCalcSingleId($userId);
         $_SESSION['gcid'] = $gcid;
 
-        var_dump($subId);
-        var_dump($gcid);
+        // var_dump($subId);
+        // var_dump($gcid);
 
         // Display the title and form
         echo '<h3 class="text-center p-3">Shopping cart</h3>';
-        echo '<div class="row justify-content-center p-3">';
+        echo '<div class="row justify-content-center p-3 vh-100">';
         echo '<div class="col-md-8">';
         echo '<div class="card mt-3">';
         echo '<div class="card-body">';
@@ -154,7 +155,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<h5 class= "mt-2">Payment Method</h5>';
         echo '<div class="d-flex">'; // Flexbox styling to center the select box
         echo '<select id="payment_method" name="payment_method" class="form-select form-control" style="width: auto;">';
-        echo '<option value="credit_card">Credit Card</option>';
+        echo '<option value="credit card">Credit Card</option>';
         echo '<option value="paypal">PayPal</option>';
         echo '</select>';
         echo '</div>'; // End of flexbox container

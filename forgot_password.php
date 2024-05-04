@@ -3,7 +3,6 @@ include_once "header.php";
 include_once 'helpers/session_helper.php';
 ?>
 
-
 <body class="d-flex flex-column vh-100">
     <main class="login-container mt-5 flex-grow-1" style="background-image: url('images/nature1.jpg');">
         <div class="container d-flex justify-content-center align-items-start" style="min-height: 100vh; width: 400px">

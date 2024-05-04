@@ -1,8 +1,6 @@
 <?php
-
 class SubscriptionView extends Subscription{
-
-    
+   
 public function fetchAllSubscriptions($userId) {
     try {
         $subscriptionInfo = $this->getSubscription($userId);

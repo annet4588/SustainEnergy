@@ -6,7 +6,7 @@ include_once "header.php";
 <main class="container mt-5 flex-grow-1">
 <div class="p-3">
 <h4 >Contact Us</h4>
-<a href="mailto:sustainEnergy@gmail.com">sustainEnergy@gmail.com</a></p>
+<p><a href="mailto:sustainEnergy@gmail.com">sustainEnergy@gmail.com</a></p>
 <?php echo date("Y"); ?> 
 </div>
 <div>

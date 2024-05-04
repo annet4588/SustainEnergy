@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $certificateContr = new CertificateContr($userId, $companyName, $completionDate, $certificateType, $approvedBy, $certificateImg);
         $certificateContr->processCertificate();
 
-        var_dump($userId, $companyName, $completionDate, $certificateType, $approvedBy, $certificateImg);
+        // var_dump($userId, $companyName, $completionDate, $certificateType, $approvedBy, $certificateImg);
       
         
         echo '<div class="row justify-content-center p-3">';

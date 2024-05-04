@@ -19,7 +19,7 @@ class ProfileInfoContr extends ProfileInfo{
     public function setDefaultProfileInfo() {
         $profileTitle = $this->userUid;
         $profileStatus = "Inactive";
-        $companyName = "Your Company Name goes here";
+        $companyName = "";
         $firstName = "";
         $lastName = "";
         $email = "";
@@ -30,11 +30,12 @@ class ProfileInfoContr extends ProfileInfo{
     }
     
 
-    //Create method to update the actual infor when the user types the new info for each field
+    //Method to update the actual infor when the user types the new info for each field
    
     public function updateProfileInfo($userId,$companyName, $firstName, $lastName, $email, $phoneNumber, $joinDate) {
  
         // Update individual fields only if they are not null
+   
         if ($companyName !== null) {
             $this->updateCompanyName($companyName, $userId);
         }
@@ -54,6 +55,11 @@ class ProfileInfoContr extends ProfileInfo{
             $this->updateJoinDate($joinDate,$userId);
         }
     }
+      // Method for admin to update the user's profile
+    public function updateUserProfileInfo($userId, $profileTitle, $profileStatus, $companyName, $firstName, $lastName, $email, $phoneNumber, $joinDate) {
+        $profileInfo = new ProfileInfo();
+        $profileInfo->updateProfile($userId, $profileTitle, $profileStatus, $companyName, $firstName, $lastName, $email, $phoneNumber, $joinDate);
+    }
     
     // Method to check for empty input fields
     private function emptyInputCheck($companyName, $firstName, $lastName, $email, $phoneNumber, $joinDate) {
@@ -61,10 +67,44 @@ class ProfileInfoContr extends ProfileInfo{
     }
 
     //Method to update profile Status once subscibed 
-    public function updateProfileStatus($profileStatus, $userId){
-        $this->updateProfileStatusInfo($profileStatus,$userId);
+    // public function updateProfileStatus($profileStatus, $userId){
+    //     $this->updateProfileStatus($profileStatus,$userId);
+    // }
+
+
+    //Method to update profile Status once subscribed 
+    // public function updateProfileStatus($profileStatus, $userId){
+    //     // Call the method from the parent class ProfileInfo
+    //     parent::updateProfileStatus($profileStatus, $userId);
+    // }
+
+    public function updateProfileStatus($profileStatus, $userId) {
+        // Validate that $profileStatus is a valid ENUM value
+        $validStatuses = ['Active', 'Inactive', 'Blocked'];
+        if (!in_array($profileStatus, $validStatuses)) {
+            throw new Exception("Invalid profile status.");
+        }
+
+        // Call the method from the parent class ProfileInfo
+        parent::updateProfileStatus($profileStatus, $userId);
     }
 
+
+    //Method to fetch all profiles
+    public function fetchAllProfiles(){
+        //Instantiate the ProfileInfo class to access its methods
+        $profileInfo = new ProfileInfo();
+        $profiles = $profileInfo->getAllProfiles();
+
+        //Return the array of profiles
+        return $profiles;
+    }
+
+    //Method to fetch profile Id
+    public function fetchProfileId($userId){
+        $profileIdInfo=$this->getProfileId($userId);
+        return $profileIdInfo;
+    }
 }
 
 //The Controller class which handles user's input from the user inside the Website

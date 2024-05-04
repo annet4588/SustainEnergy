@@ -1,5 +1,6 @@
 <?php
 include_once 'header.php';
+
 include_once "classes/dbh.classes.php";
 include_once "classes/activityinfo.classes.php";
 include_once "classes/activityinfo-contr.classes.php";
@@ -21,14 +22,13 @@ $subId = '';
 if (isset($_SESSION['userid'])) {
     $userId = $_SESSION['userid'];
 }
-if (isset($_SESSION['subid'])) {
-    $subId = $_SESSION['subid'];
-}
 
 // Initialize $_SESSION['green_calc'] as an empty array if not set
 if (!isset($_SESSION['green_calc'])) {
     $_SESSION['green_calc'] = array();
 }
+if(isset($_SESSION['subid'])){
+    $subId = $_SESSION['subid'];
 
 // Check if the selected activity is received and update the session
 if (isset($_POST['activity_id'])) {
@@ -61,7 +61,12 @@ if (isset($_POST['activity_id'])) {
         </div>';
     }
 }
-
+}else{
+    echo '<div class="alert alert-danger m-3">
+    <p>You have to Subscribe to start!</p>
+    <p>Please go to your Profile to Subscribe.</p>
+    </div>';
+}
 // Check if the activity_id is received for deletion
 if (isset($_POST['delete_activity_id'])) {
     $delete_activity_id = $_POST['delete_activity_id'];
@@ -89,8 +94,8 @@ $activities_in_green_calc = isset($_SESSION['green_calc']) ? $_SESSION['green_ca
 <body class="d-flex flex-column vh-100">
     <main class="flex-grow-1">
         <section class="center-card">
-            <div class="container-fluid">
-                <h3 class="text-center">Green Calculator</h3>
+            <div class="container-fluid p-3">
+                <h3 class="text-center p-3">Green Calculator</h3>
                 <div class="card profile-bg profile-card p-3">
                     <div class="alert alert-success" role="alert">
                         <h5>How to take part in Green Activities:</h5>
@@ -151,7 +156,7 @@ $activities_in_green_calc = isset($_SESSION['green_calc']) ? $_SESSION['green_ca
                                     </div>
                                 </div>
                             <?php endfor; ?>
-                            <?php var_dump($activities_in_green_calc) ?>
+                            <!-- var_dump($activities_in_green_calc)  -->
                         </div>
                     </div>
 

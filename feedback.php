@@ -6,14 +6,22 @@ include_once "classes/feedback.classes.php";
 include_once "classes/feedback-contr.classes.php";
 include_once "classes/feedback-view.classes.php";
 
+include_once "classes/subsriptioninfo.classes.php";
+include_once "classes/subscriptioninfo-view.classes.php";
+
 // Display the title and Add Your Story button inline
 echo '<div class="container text-center mt-4" style="min-height: 100vh;">';
-echo '<div class="d-flex justify-content-between align-items-center mb-3">';
-echo '<h3 class="m-0">Your Stories</h3>';
+echo '<div class="d-flex  flex-column  align-items-center mb-3">';
+echo '<h3 class="mb-3 p-3">Your Stories</h3>';
 echo '<a href="' . (isset($_SESSION['userid']) ? 'feedback_added.php' : 'login.php') . '" class="btn btn-outline-success">Add Your Story</a>';
 echo '</div>';
 
-$userId ='';
+$userId= '';
+
+// $subscriptionView = new SubscriptionView();
+// $subId = $subscriptionView->fetchSubscriptionSingleId($userId); // This returns the subscription ID 
+
+// var_dump($subId);
 
 try {
     // Create an instance of FeedbackView

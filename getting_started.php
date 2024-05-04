@@ -1,40 +1,64 @@
 <?php include_once "header.php"; ?>
 
-
 <body>
-    <div class="container p-3">
-        <div class="row p-3">
-            <div class="col-md-12">
-                <h3 class="p-3">Getting Started</h3>
-                <div class="p-3">
-                    <p>For companies of all sizes to embrace environmental responsibility through our engaging activities.</p>
-                </div>
-                <h4 class="p-3">Subscribe:</h4>
-                <div class="p-3">
-                    <p>Pay £99 to subscribe to participate in the Green Activities.</p>
-                    <p>Go to your Profile and click on Subscribe button to pay the fee and enable to start the jorney</p>
-                    <h4 class="p-3">How to take part in Green Activities:</h4>
-                    <p>Go to Green Calculator page and read the instructions</p>
-                </div>
-                <h4 class="p-3">The Idea:</h4>
-                <div class="p-3">
-                    <ol>
-                        <li>Choose 10 Green Activities - use ADD button to add them to the List. DELETE button will remove Activities from the List.</li>
-                        <li>Once all 10 Activities chosen, Select Score for each Activity to find out if you reached the Goal - 100 Points!</li>
-                        <li>Once all 10 Activities marked, Total Score will be calculated. If 100 Points achieved, you can see Certificate - click on the Certificate button!</li>
-                        <li>Don't worry if you did not achieve the Goal from the first time, as you can donate to purchase a voucher to get the remaining Points and still receive Certificate - click on the Donate button!</li>
-                    </ol>
-                </div>
-                <h4 class="p-3">Receive Certificate</h4>
-                <div class="p-3">
-                    <p>Receive recognition from a reputable professional body while actively contributing to driving support for green initiatives.</p>
-                    <p>Go to Profile page and click on View in Achievement section to see Certificate.</p>
-                    
-                </div>
-                <h4 class="p-3">Join us in making a meaningful difference for a sustainable future ->  <a href="http://localhost/sustainenergy/signup.php">http://localhost/sustainenergy/signup.php</a></h4>
-                
-            </div>
+    <div class="container p-4">
+        <h3 class="pb-3">Getting Started Guide:</h3>
+        <h4 class="pb-3"> Embrace Environmental Responsibility with Green Activities</h4>
+        <p>Welcome to our platform for embracing environmental responsibility through engaging activities!</p>
+        <p>Here's a step-by-step guide to get started:</p>
+
+        <h3>1. Subscribe:</h3>
+        <p>To participate in our Green Activities, you need to subscribe by paying a subscription fee of £99.</p>
+
+        <h4>How to Subscribe:</h4>
+        <ul>
+            <?php if(isset($_SESSION["useruid"])){
+                echo '<li>Go to your <a href="profile.php">Profile page</a>.</li>';
+            } else{
+                echo '<li>Go to your <a href="login.php">Profile page</a>.</li>';
+            }?>
+            
+            <li>Click on the "Subscribe" button.</li>
+            <li>Follow the instructions to complete the payment process and enable access to start your journey.</li>
+        </ul>
+
+        <h3>2. Taking Part in Green Activities:</h3>
+        <p>To begin your journey towards environmental responsibility, follow these steps:</p>
+
+        <p>Visit the <?php if(isset($_SESSION["useruid"])){
+             echo'<a href="green_calc.php">Green Calculator page</a>';     
+        }else{
+            echo'<a href="login.php">Green Calculator page</a>'; 
+        }?> and carefully read the instructions provided.</p>
+
+        <h4 class="pb-3">Choosing Green Activities:</h4>
+        <ul>
+            <li>Choose 10 Green Activities that you're interested in.</li>
+            <li>Use the "ADD" button to add them to your list.</li>
+            <li>If you change your mind, you can remove activities from the list using the "DELETE" button.</li>
+        </ul>
+
+        <h4 class="pb-3">Scoring Your Activities:</h4>
+        <p>Once you've chosen all 10 activities, select a score for each activity to assess your progress towards the goal of 100 points.</p>
+        <p>Your total score will be calculated automatically.</p>
+
+        <h3 class="pb-3">3. Receiving Your Certificate:</h3>
+        <p>If you achieve 100 points, you can receive a Certificate.</p>
+        <button>Click here to view and download your Certificate</button>
+        <p>If you don't achieve 100 points initially, don't worry!</p> 
+        <p>You can still receive a Certificate by donating to purchase a voucher for the remaining points.</p>
+        <button>Click here to proceed with donation</button>
+
+        <h4 class="pb-3 pt-3">Viewing Your Certificate:</h4>
+        <p>After receiving your Certificate, you can view it in the Achievement section of your Profile page.</p>
+        <button>Click here to view your Certificate</button>
+
+        <div class="signup-button">
+            <p>Join us in making a meaningful difference for a sustainable future! <a href="http://localhost/sustainenergy/signup.php"><button>Sign up now</button></a> to get started.</p>
         </div>
+
+        <h5 class="text-center p-3">Thank you for choosing to embrace environmental responsibility with us!</h5>  
+        <h5 class="text-center p-3">Together, we can create a more sustainable world!</h5>
     </div>
 </body>
 

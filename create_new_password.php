@@ -6,7 +6,7 @@ include_once './helpers/session_helper.php';
 $selector = $_GET['selector'] ?? null;
 $validator = $_GET['validator'] ?? null;
 
-var_dump($selector, $validator);
+// var_dump($selector, $validator);
 
 if (empty($selector) || empty($validator)) {
     echo 'Could not validate your request!';

@@ -15,9 +15,9 @@ if(isset($_GET['query'])){
 
     //Display the searching Activity
     if(count($results) > 0){
-        echo '<div class="container mt-5 justify-content-center">';
-        echo '<h2>Search Results</h2>';
-        echo '<div class="row">';
+        echo '<div class="container p-3 justify-content-center vh-100">';
+        echo '<h3 class="text-center p-3">Search Results</h3>';
+        echo '<div class="row p-3">';
 
         foreach($results as $row){
           echo '<div class="col-md-4 mb-4">
@@ -33,8 +33,9 @@ if(isset($_GET['query'])){
         echo '</div>';
         echo '</div>';
     }else{
-        echo '<div class="container mt-5">';
-        echo '<h2>No results found for your query: ' . htmlspecialchars($query) . '</h2>';
+        echo '<div class="container p-3 vh-100">';
+        echo '<h3 class="text-center p-3">Search Results</h3>';
+        echo '<h4 class="text-center p-3">No results found for your query: ' . htmlspecialchars($query) . '</h4>';
         echo '</div>';
     }
 }

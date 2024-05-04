@@ -1,5 +1,4 @@
 <?php
-
 class Search extends Dbh{
 
      //Search Activity

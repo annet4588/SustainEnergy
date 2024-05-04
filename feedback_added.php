@@ -16,6 +16,8 @@ echo '<h3 class="text-center mt-4 p-3">Feedback</h3>';
 
 //Check if session is set
 $userId = isset($_SESSION['userid']) ? $_SESSION['userid'] : null;
+
+
 //Initialise variables
 $companyName = $fbMessage = "";
 $fbDate = date('Y-m-d');
@@ -66,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          unset($_SESSION['fb_message']);
          unset($_SESSION['fb_date']);
 
-        var_dump($userId, $fbRate, $companyName, $fbMessage, $fbDate);
+        // var_dump($userId, $fbRate, $companyName, $fbMessage, $fbDate);
         // Display success message inside a card
     
         echo '<div class="alert alert-success" role="alert">';

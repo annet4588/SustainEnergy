@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) { // Add co
 <body class="d-flex flex-column vh-100"> 
 <main class="login-container mt-5 pb-5 flex-grow-1" style="background-image: url('images/nature1.jpg');">
     <div class="container d-flex justify-content-center align-items-start" style="min-height: 100vh; width: 400px">
-        <div class="card card-login p-3" style="margin-top:50px">
-            <div class="card-body m-3">
+        <div class="flex card card-login p-3" style="margin-top:50px">
+            <div class="flex card-body m-3">
                 <h5 class="card-title">Login</h5>
                 <?php
                 if (!empty($errors)) {

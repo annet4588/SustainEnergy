@@ -42,4 +42,9 @@ class SubscriptionContr extends Subscription{
         $this->deleteSubscription($userId, $subId);
 
     }
+
+    //Method to update Profile status for Subscription
+    public function changeStatus($userId, $status){
+       $this->updateProfileStatus($userId, $status);
+    }
 }

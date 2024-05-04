@@ -44,7 +44,7 @@
                         <div class="row p-3">
                             
                             <div class="container-fluid text-center">
-                                <h6 class="card-title pt-3">SustainEnergy&copy <?php echo date("Y"); ?> All rights reserved</h6>
+                                <h6 class="card-title pt-3"><a href="copyright.php">SustainEnergy&copy</a> <?php echo date("Y"); ?> All rights reserved</h6>
                               </div>
                             
                         </div>

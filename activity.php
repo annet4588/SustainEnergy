@@ -16,7 +16,7 @@ $activityIds = $activityInfo->fetchActivityId();
 ?>
 
 <body class="d-flex flex-column vh-100"> 
-<main class="container mt-5 flex-grow-1">
+<main class="container p-3 flex-grow-1">
     <div class="text-center p-3">
         <h3>Activities</h3>
     </div>

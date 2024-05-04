@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
 
    // Delete the user from the database
     try {
-        $signupContr->removeUser($userIdToRemove); // Pass userId directly
+        $signupContr->removeUser($userIdToRemove); // Pass userId 
         $userDeleted = true;
     } catch (Exception $e) {
         // Handle any errors that occur during user removal
@@ -43,7 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
     <title>Admin Page</title>
 </head>
 <body>
-    <h2>Admin Page</h2>
+<div class="vh-100">
+    <h3>Admin Page</h3>
     <?php
     // Display message if a user was successfully deleted
     if ($userDeleted) {
@@ -52,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
             </div>';
     }
     ?>
+    <!--User Table-->
     <table id="userTable">
         <tr>
             <th>User ID</th>
@@ -65,28 +67,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
                 <td><?php echo $user["users_uid"]; ?></td>
                 <td><?php echo $user["users_email"]; ?></td>
                 <td>
-                    <form id="removeForm_<?php echo $user["users_id"]; ?>" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                    <form id="removeForm_<?php echo $user["users_id"]; ?>" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" style="display: inline;">
                         <input type="hidden" name="userId" value="<?php echo $user["users_id"]; ?>">
                         <button type="submit" class="btn btn-outline-success removeBtn" onclick="handleSubmit(event, <?php echo $user['users_id'];?>)">Remove</button>
+                    </form>
+                    <form id="viewForm_<?php echo $user["users_id"];?>" method="post" action="user_profile_update.php" style="display: inline;">
+                        <input type="hidden" name="userId" value="<?php echo $user["users_id"]; ?>">
+                        <button type="submit" class="btn btn-outline-success viewBtn" >View</button>
                     </form>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
+</div>
 </body>
 </html>
 <?php include_once "footer.php"; ?>
 
 
-<!-- Include Bootstrap JS and jQuery -->
+<!-- Bootstrap JS and jQuery -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Function to handle form submission
+    // Function to handle Remove button
     function handleSubmit(event, userId) {
-        // Prevent the default form submission behavior
+        // Prevent the default form submission 
         event.preventDefault();
         
         // Get the form ID from the event
@@ -101,45 +108,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
             return;
         }
     }
+    //Function to handle View button
+    function viewSubmit(event, userId){
+        event.preventDefault();
+
+        //Get the form id from the event
+        var formId = event.target.form.id;
+    }
 </script>
 <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:hover {
-            background-color: #f2f2f2;
-        }
-        button {
-            padding: 8px 12px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+    button {
+        padding: 8px 12px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>

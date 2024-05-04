@@ -28,10 +28,11 @@ if(isset($_SESSION['userid'])) {
 }
 
 // var_dump($activityDetails);
+
 // Output activity details
 echo '
 <body class="d-flex flex-column"> 
-<main class="container m-3 pb-5 flex-grow">
+<main class="container m-3 pb-5 flex-grow vh-100">
 
 <div class="text-center p-3">
         <h3>Activity Info</h3>
@@ -62,7 +63,7 @@ echo '
 include_once "footer.php";
 ?>
 
-<!-- Include Bootstrap JS and jQuery -->
+<!-- Bootstrap JS and jQuery -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
