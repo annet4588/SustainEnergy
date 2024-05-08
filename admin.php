@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
     <title>Admin Page</title>
 </head>
 <body>
-<div class="vh-100">
+<div class="m-4 vh-100">
     <h3>Admin Page</h3>
     <?php
     // Display message if a user was successfully deleted
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
     }
     ?>
     <!--User Table-->
-    <table id="userTable">
+    <table id="userTable" class="d-flex container">
         <tr>
             <th>User ID</th>
             <th>Username</th>
@@ -90,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     // Function to handle Remove button
     function handleSubmit(event, userId) {
@@ -124,9 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
         background-color: #f4f4f4;
     }
     .container {
-        max-width: 800px;
+        max-width: 600px;
         margin: 0 auto;
         padding: 20px;
+        border-radius: 10px;
     }
     h3 {
         text-align: center;
@@ -139,8 +141,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["userId"])) {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     th, td {
-        padding: 12px 15px;
-        text-align: left;
+        padding: 15px 15px;
+        text-align: center;
         border-bottom: 1px solid #ddd;
     }
     tr:hover {

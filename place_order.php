@@ -25,6 +25,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_subscription'])){
      $subId = $_SESSION['subid'];
      if (isset($_SESSION['gcid'])) {
         $gcid = $_SESSION['gcid'];
+    }else{
+        $gcid='';
     }
    
      // Sanitising data
@@ -46,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_subscription'])){
          $purchaseHistoryContr->processPurchaseHistory();
 
         
-         var_dump($subId, $gcid, $userId, $purchaseDate);
+        //  var_dump($subId, $gcid, $userId, $purchaseDate);
  
          //Profile status
          $profileInfo = new ProfileInfoContr($userId, $userUid);
@@ -104,9 +106,9 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['pay_greencalc'])) 
         $purchaseHistoryContr = new PurchaseHistoryContr($userId, $subId,$gcid, $purchaseDate, $shortfallScore, $voucherAmount, $paymentMethod);
         // Record the purchaseHistory
         $purchaseHistoryContr->processPurchaseHistory();
-        var_dump($userId, $subId,$gcid, $purchaseDate, $shortfallScore, $voucherAmount, $paymentMethod);
+        // var_dump($userId, $subId,$gcid, $purchaseDate, $shortfallScore, $voucherAmount, $paymentMethod);
 
-        var_dump($gcid);
+        // var_dump($gcid);
         // Debugging
         // var_dump($userId, $companyName, $completionDate, $certificateType, $approvedBy, $certificateImg);
         // var_dump($gcid, $userId, $purchaseDate, $shortfallScore, $voucherAmount, $paymentMethod);

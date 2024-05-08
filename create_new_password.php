@@ -39,7 +39,7 @@ if (empty($selector) || empty($validator)) {
                                 <input type="password" class="form-control" id="pwd-repeat" name="pwd-repeat"
                                        placeholder="Repeat new password...">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block" name="submit">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-block mt-2" name="submit">Submit</button>
                         </form>
                       
                     </div>

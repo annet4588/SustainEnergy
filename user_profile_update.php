@@ -73,7 +73,7 @@ if(isset($_POST['userId'])) {
 ?>
 
 <body>
-<div class="vh-100">
+<div class="container mt-4 pt-3 vh-100">
     <h3>User Profile</h3>
     <h5>User ID: <?php echo $userId?></h5>
 

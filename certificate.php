@@ -16,7 +16,7 @@ try {
     $certificates = $certificateInfo->fetchCertificate($userId);
 
     
-    echo'<div class="row justify-content-center">';
+    echo'<div class="row container justify-content-center pb-3">';
     if (!empty($certificates)) {
         foreach ($certificates as $certificate) {
             echo '<div class="col-md-6 p-3 text-center">';
