@@ -61,7 +61,7 @@
 
                     <li class="nav-item">
                         <?php if(isset($_SESSION['userid'])) { ?>
-                            <a class="nav-link" href="profile.php"><?php echo $_SESSION['useruid']; ?></a>
+                            <a class="nav-link" href="profile.php"><?php echo '<i class="fas fa-user" style="color:orange;"></i> '. $_SESSION['useruid']; ?></a>
                         <?php } else { ?>   
                             <a class="nav-link" href="signup.php">SIGN UP</a>
                         <?php } ?>

@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userid'])&& isset($_POS
                 <div class="card profile-bg profile-card" id="profile-card">
                 <div class="card-body profile-info" id="profile-body">  
                     <img class="rounded-circle" src="activityImg/img_default.png">
-                    <h4 class="px-4 py-2 m-4"><?php echo $_SESSION["useruid"] ?></h4>
+                    <h4 class="px-4 py-2 m-4"><?php echo $_SESSION["useruid"] ?> <a class="px-6 py-2" href="notifications.php" style="color:white";><i class="fas fa-bell" style="color:orange";></i> Notifications</a></h4>                   
                     <form method="POST" action="shopping_cart.php">
                     <div class="form-group">
                     <label for="profile_status">Company status</label>
