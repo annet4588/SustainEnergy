@@ -1,6 +1,22 @@
 <?php
 include_once 'header.php';
+?>
+<html>
+<head>
+<title>SustainEnergy</title>
+<!-- You can use Open Graph tags to customize link previews.
+Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+<meta property="og:url"           content="http://localhost/sustainenergy/certificate.php" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Your Website Title" />
+<meta property="og:description"   content="Your description" />
+<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+</head>
+<body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0" nonce="V86SXdpP"></script>
 
+<?php
 echo '<div class="container text-center mt-4" style="min-height: 100vh;">';
 echo '<h3 class="text-center mt-4 p-3">Achievements</h3>';
 
@@ -41,9 +57,19 @@ try {
             echo '</div>';
             echo '</div>';
             echo '</div>';
-        }
-        echo '</div>';
-        echo '</div>';
+        }?>
+
+
+<!-- Your share button code -->
+<div class="fb-share-button btn=lg" 
+data-href="http://localhost/sustainenergy/certificate.php" 
+data-layout="button" 
+data-size="large">
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2Fsustainenergy%2Fcertificate.php&amp;src=sdkpreparse" 
+class="fb-xfbml-parse-ignore">Share</a></div>
+
+<?php echo '</div>';
+      echo '</div>'; 
     } else {
         echo '<div class="col-md-12">';
         echo '<div class="card mt-3">';
@@ -58,7 +84,6 @@ try {
         echo '</div>';
         echo '</div>';
     }
-
     echo '</div>';
     echo '</div>';
 
@@ -84,34 +109,6 @@ echo '</div>';
 
 include_once "footer.php";
 
-
-// <div class="container-fluid mt-4">
-//     <h4 class="text-center">My Cetificate</h4>
-//     <div class="row justify-content-center p-3">
-//         <div class="col-md-6">
-//             <div class="card border border-success">
-//                 <div class="card-body">
-//                     <h5 class="card-title text-center">SustainEnergy Certificate</h5>
-//                     <div class="text-center">
-//                         <div class="card-body profile-content">
-//                             <!-- Content of the purchaseHistory card -->
-//                             <h5 class="mt-4">Completed by</h5> 
-//                             <p class="certificate-info">Company Name</p>
-//                             <h5 class="mt-4">Date of Completion</h5>
-//                             <p class="certificate-info">April 1, 2024</p>
-//                             <h5 class="mt-4">Certificate Type</h5>
-//                             <p class="certificate-info">Green Energy</p>
-//                             <h5 class="mt-4">Approved by</h5>
-//                             <p class="certificate-info">John Piperras</p>
-//                             <h5 class="mt-4">Certificate ID</h5>
-//                             <p class="certificate-info">123456789  <img class="certificate-img" src="images/certificateBCS.png"></p>
-//                         </div> 
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     </div>
-// </div>
 
             
 
